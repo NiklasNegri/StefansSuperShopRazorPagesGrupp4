@@ -30,6 +30,9 @@ namespace StefansSuperShop.Data
         public virtual DbSet<Region> Region { get; set; }
         public virtual DbSet<Shippers> Shippers { get; set; }
         public virtual DbSet<Suppliers> Suppliers { get; set; }
+        public virtual DbSet<Newsletters> Newsletters { get; set; }
+        public virtual DbSet<NewslettersSent> NewslettersSents { get; set; }
+        public virtual DbSet<AspNetUsers> AspUsers { get; set; }
 
     }
 }
