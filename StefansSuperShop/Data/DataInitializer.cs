@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using StefansSuperShop.Migrations;
+using StefansSuperShop.Data.Entities;
 
 namespace StefansSuperShop.Data
 {
@@ -111,7 +111,7 @@ namespace StefansSuperShop.Data
         private void addProduct(string category, string name, int pris, int stocklevel, string description)
         {
             if (_dbContext.Products.Any(e => e.ProductName == name)) return;
-            _dbContext.Products.Add(new Products
+            _dbContext.Products.Add(new Product
             {
                 ProductName = name,
                 Category = _dbContext.Categories.First(c=>c.CategoryName == category),
@@ -137,7 +137,7 @@ namespace StefansSuperShop.Data
         private void AddCategoryIfNotExists(string name, string description)
         {
             if (_dbContext.Categories.Any(e => e.CategoryName == name)) return;
-            _dbContext.Categories.Add(new Categories
+            _dbContext.Categories.Add(new Category
             {
                 CategoryName = name, Description = description,
                 Picture = GetPicture(name)

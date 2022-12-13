@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StefansSuperShop.Data
+namespace StefansSuperShop.Data.Entities
 {
     [Table("Order Details")]
-    public partial class OrderDetails
+    public partial class OrderDetail
     {
         [Key]
         [Column("OrderID")]
@@ -20,10 +20,10 @@ namespace StefansSuperShop.Data
         public float Discount { get; set; }
 
         [ForeignKey(nameof(OrderId))]
-        [InverseProperty(nameof(Orders.OrderDetails))]
-        public virtual Orders Order { get; set; }
+        [InverseProperty(nameof(Entities.Order.OrderDetails))]
+        public virtual Order Order { get; set; }
         [ForeignKey(nameof(ProductId))]
-        [InverseProperty(nameof(Products.OrderDetails))]
-        public virtual Products Product { get; set; }
+        [InverseProperty(nameof(Entities.Product.OrderDetails))]
+        public virtual Product Product { get; set; }
     }
 }

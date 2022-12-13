@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StefansSuperShop.Data
+namespace StefansSuperShop.Data.Entities
 {
-    public partial class Shippers
+    public partial class Shipper
     {
-        public Shippers()
+        public Shipper()
         {
-            Orders = new HashSet<Orders>();
+            Orders = new HashSet<Order>();
         }
 
         [Key]
@@ -22,6 +22,6 @@ namespace StefansSuperShop.Data
         public string Phone { get; set; }
 
         [InverseProperty("ShipViaNavigation")]
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
