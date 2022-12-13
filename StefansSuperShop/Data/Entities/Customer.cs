@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StefansSuperShop.Data
+namespace StefansSuperShop.Data.Entities
 {
-    public partial class Customers
+    public partial class Customer
     {
-        public Customers()
+        public Customer()
         {
-            Orders = new HashSet<Orders>();
+            Orders = new HashSet<Order>();
         }
 
         [Key]
@@ -40,6 +40,6 @@ namespace StefansSuperShop.Data
 
         [InverseProperty("Customer")]
 
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

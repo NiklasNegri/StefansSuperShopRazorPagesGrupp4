@@ -12,8 +12,8 @@ using StefansSuperShop.Data;
 namespace StefansSuperShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221119060639_e")]
-    partial class e
+    [Migration("20221213084914_CreateTables")]
+    partial class CreateTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,6 +88,10 @@ namespace StefansSuperShop.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -139,6 +143,8 @@ namespace StefansSuperShop.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -226,7 +232,7 @@ namespace StefansSuperShop.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Categories", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -251,7 +257,7 @@ namespace StefansSuperShop.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Customers", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Customer", b =>
                 {
                     b.Property<string>("CustomerId")
                         .HasMaxLength(5)
@@ -304,7 +310,7 @@ namespace StefansSuperShop.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Employees", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Employee", b =>
                 {
                     b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd()
@@ -385,33 +391,50 @@ namespace StefansSuperShop.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.OrderDetails", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Newsletter", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("NewsletterId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("OrderID");
+                        .HasColumnName("NewsletterID");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("ProductID");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NewsletterId"), 1L, 1);
 
-                    b.Property<float>("Discount")
-                        .HasColumnType("real");
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<short>("Quantity")
-                        .HasColumnType("smallint");
+                    b.Property<bool>("HasBeenSent")
+                        .HasColumnType("bit");
 
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("money");
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("OrderId", "ProductId");
+                    b.HasKey("NewsletterId");
 
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Order Details");
+                    b.ToTable("Newsletters");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Orders", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.NewsletterSent", b =>
+                {
+                    b.Property<int>("NewsletterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("NewsletterID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NewsletterId"), 1L, 1);
+
+                    b.Property<int>("AspNetUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SendDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("NewsletterId");
+
+                    b.ToTable("NewslettersSent");
+                });
+
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Order", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -479,7 +502,33 @@ namespace StefansSuperShop.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Products", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.OrderDetail", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int")
+                        .HasColumnName("OrderID");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int")
+                        .HasColumnName("ProductID");
+
+                    b.Property<float>("Discount")
+                        .HasColumnType("real");
+
+                    b.Property<short>("Quantity")
+                        .HasColumnType("smallint");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("money");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Order Details");
+                });
+
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -529,7 +578,7 @@ namespace StefansSuperShop.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Region", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Region", b =>
                 {
                     b.Property<int>("RegionId")
                         .ValueGeneratedOnAdd()
@@ -548,7 +597,7 @@ namespace StefansSuperShop.Migrations
                     b.ToTable("Region");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Shippers", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Shipper", b =>
                 {
                     b.Property<int>("ShipperId")
                         .ValueGeneratedOnAdd()
@@ -571,7 +620,7 @@ namespace StefansSuperShop.Migrations
                     b.ToTable("Shippers");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Suppliers", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Supplier", b =>
                 {
                     b.Property<int>("SupplierId")
                         .ValueGeneratedOnAdd()
@@ -629,7 +678,7 @@ namespace StefansSuperShop.Migrations
                     b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Territories", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Territory", b =>
                 {
                     b.Property<string>("TerritoryId")
                         .HasMaxLength(20)
@@ -649,7 +698,17 @@ namespace StefansSuperShop.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Territories");
+                    b.ToTable("Territory");
+                });
+
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<bool>("NewsletterActive")
+                        .HasColumnType("bit");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -703,45 +762,26 @@ namespace StefansSuperShop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Employees", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Employee", b =>
                 {
-                    b.HasOne("StefansSuperShop.Data.Employees", "ReportsToNavigation")
+                    b.HasOne("StefansSuperShop.Data.Entities.Employee", "ReportsToNavigation")
                         .WithMany("InverseReportsToNavigation")
                         .HasForeignKey("ReportsTo");
 
                     b.Navigation("ReportsToNavigation");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.OrderDetails", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Order", b =>
                 {
-                    b.HasOne("StefansSuperShop.Data.Orders", "Order")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("StefansSuperShop.Data.Products", "Product")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("StefansSuperShop.Data.Orders", b =>
-                {
-                    b.HasOne("StefansSuperShop.Data.Customers", "Customer")
+                    b.HasOne("StefansSuperShop.Data.Entities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId");
 
-                    b.HasOne("StefansSuperShop.Data.Employees", "Employee")
+                    b.HasOne("StefansSuperShop.Data.Entities.Employee", "Employee")
                         .WithMany("Orders")
                         .HasForeignKey("EmployeeId");
 
-                    b.HasOne("StefansSuperShop.Data.Shippers", "ShipViaNavigation")
+                    b.HasOne("StefansSuperShop.Data.Entities.Shipper", "ShipViaNavigation")
                         .WithMany("Orders")
                         .HasForeignKey("ShipVia");
 
@@ -752,13 +792,32 @@ namespace StefansSuperShop.Migrations
                     b.Navigation("ShipViaNavigation");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Products", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.OrderDetail", b =>
                 {
-                    b.HasOne("StefansSuperShop.Data.Categories", "Category")
+                    b.HasOne("StefansSuperShop.Data.Entities.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StefansSuperShop.Data.Entities.Product", "Product")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Product", b =>
+                {
+                    b.HasOne("StefansSuperShop.Data.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId");
 
-                    b.HasOne("StefansSuperShop.Data.Suppliers", "Supplier")
+                    b.HasOne("StefansSuperShop.Data.Entities.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("SupplierId");
 
@@ -767,9 +826,9 @@ namespace StefansSuperShop.Migrations
                     b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Territories", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Territory", b =>
                 {
-                    b.HasOne("StefansSuperShop.Data.Region", "Region")
+                    b.HasOne("StefansSuperShop.Data.Entities.Region", "Region")
                         .WithMany("Territories")
                         .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -778,44 +837,44 @@ namespace StefansSuperShop.Migrations
                     b.Navigation("Region");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Categories", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Category", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Customers", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Customer", b =>
                 {
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Employees", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Employee", b =>
                 {
                     b.Navigation("InverseReportsToNavigation");
 
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Orders", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Order", b =>
                 {
                     b.Navigation("OrderDetails");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Products", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Product", b =>
                 {
                     b.Navigation("OrderDetails");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Region", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Region", b =>
                 {
                     b.Navigation("Territories");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Shippers", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Shipper", b =>
                 {
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("StefansSuperShop.Data.Suppliers", b =>
+            modelBuilder.Entity("StefansSuperShop.Data.Entities.Supplier", b =>
                 {
                     b.Navigation("Products");
                 });
