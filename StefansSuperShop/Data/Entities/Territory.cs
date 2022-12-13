@@ -21,6 +21,7 @@ namespace StefansSuperShop.Data.Entities
         [Column("RegionID")]
         public int RegionId { get; set; }
 
+        [InverseProperty("Territories")]
         [ForeignKey(nameof(RegionId))]
         public virtual Region Region { get; set; }
     }

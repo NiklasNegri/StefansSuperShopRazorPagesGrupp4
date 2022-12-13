@@ -12,7 +12,7 @@ using StefansSuperShop.Data;
 namespace StefansSuperShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221213073905_CreateTables")]
+    [Migration("20221213084914_CreateTables")]
     partial class CreateTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

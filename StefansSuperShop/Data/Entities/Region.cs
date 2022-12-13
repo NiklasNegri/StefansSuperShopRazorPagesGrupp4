@@ -18,6 +18,8 @@ namespace StefansSuperShop.Data.Entities
         [Required]
         [StringLength(50)]
         public string RegionDescription { get; set; }
+
+        [InverseProperty("Region")]
         public virtual ICollection<Territory> Territories { get; set; }
     }
 }
