@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StefansSuperShop.Migrations
 {
-    public partial class e : Migration
+    public partial class CreateTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,6 +28,8 @@ namespace StefansSuperShop.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NewsletterActive = table.Column<bool>(type: "bit", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -116,6 +118,35 @@ namespace StefansSuperShop.Migrations
                         column: x => x.ReportsTo,
                         principalTable: "Employees",
                         principalColumn: "EmployeeID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Newsletters",
+                columns: table => new
+                {
+                    NewsletterID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HasBeenSent = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Newsletters", x => x.NewsletterID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NewslettersSent",
+                columns: table => new
+                {
+                    NewsletterID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AspNetUserId = table.Column<int>(type: "int", nullable: false),
+                    SendDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NewslettersSent", x => x.NewsletterID);
                 });
 
             migrationBuilder.CreateTable(
@@ -275,7 +306,7 @@ namespace StefansSuperShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Territories",
+                name: "Territory",
                 columns: table => new
                 {
                     TerritoryID = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
@@ -284,9 +315,9 @@ namespace StefansSuperShop.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Territories", x => x.TerritoryID);
+                    table.PrimaryKey("PK_Territory", x => x.TerritoryID);
                     table.ForeignKey(
-                        name: "FK_Territories_Region_RegionID",
+                        name: "FK_Territory_Region_RegionID",
                         column: x => x.RegionID,
                         principalTable: "Region",
                         principalColumn: "RegionID",
@@ -466,8 +497,8 @@ namespace StefansSuperShop.Migrations
                 column: "SupplierID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Territories_RegionID",
-                table: "Territories",
+                name: "IX_Territory_RegionID",
+                table: "Territory",
                 column: "RegionID");
         }
 
@@ -489,10 +520,16 @@ namespace StefansSuperShop.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Newsletters");
+
+            migrationBuilder.DropTable(
+                name: "NewslettersSent");
+
+            migrationBuilder.DropTable(
                 name: "Order Details");
 
             migrationBuilder.DropTable(
-                name: "Territories");
+                name: "Territory");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

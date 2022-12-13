@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StefansSuperShop.Data
+namespace StefansSuperShop.Data.Entities
 {
-    public partial class Products
+    public partial class Product
     {
-        public Products()
+        public Product()
         {
-            OrderDetails = new HashSet<OrderDetails>();
+            OrderDetails = new HashSet<OrderDetail>();
         }
 
         [Key]
@@ -32,12 +32,12 @@ namespace StefansSuperShop.Data
         public bool Discontinued { get; set; }
 
         [ForeignKey(nameof(CategoryId))]
-        [InverseProperty(nameof(Categories.Products))]
-        public virtual Categories Category { get; set; }
+        [InverseProperty(nameof(Entities.Category.Products))]
+        public virtual Category Category { get; set; }
         [ForeignKey(nameof(SupplierId))]
-        [InverseProperty(nameof(Suppliers.Products))]
-        public virtual Suppliers Supplier { get; set; }
+        [InverseProperty(nameof(Entities.Supplier.Products))]
+        public virtual Supplier Supplier { get; set; }
         [InverseProperty("Product")]
-        public virtual ICollection<OrderDetails> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
