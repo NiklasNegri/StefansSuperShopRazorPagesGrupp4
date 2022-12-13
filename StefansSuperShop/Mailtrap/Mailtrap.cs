@@ -2,7 +2,6 @@
 using System;
 using System.Threading.Tasks;
 using System.Net.Mail;
-using RestSharp;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
@@ -14,39 +13,13 @@ public class Mailtrapper
 {
     public string UserName { get; set; }
     private readonly Uri _baseAddress;
+    private const string _gmailServer = "smtp.gmail.com";
+    private const string _outlookServer = "smtp-mail.outlook.com";
     public Mailtrapper()
     {
         _baseAddress = new Uri("https://private-anon-6c570fc9c4-mailtrap.apiary-proxy.com/");
     }
-
-
-
-    public void CreateMessage(string server)
-    {
-        MailMessage message = new MailMessage(
-            from: "stefans.supershop@gmail.com",
-            to: "niklas.o.lindblad@gmail.com",
-            subject: "Hello",
-            body: "Din snygge jävel");
-        SmtpClient client = new SmtpClient(server);
-        client.Port = 587;
-        string password = "iV@309cbLShT";
-        client.Credentials = new NetworkCredential(message.From.ToString(), password) as ICredentialsByHost;
-        client.EnableSsl = true;
-        ServicePointManager.ServerCertificateValidationCallback =
-            delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-        { return true; };
-
-        try
-        {
-            client.Send(message);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Exception caught in {nameof(CreateMessage)} {ex.ToString()}");
-        }
-    }
-
+    
     public void FLCreateMessage(string server)
     {
         MailMessage message = new MailMessage(
@@ -157,15 +130,15 @@ public class Mailtrapper
 
     public void TestClient() //Denna funkar till My Inbox Sandbox
     {
-        MailAddress to = new MailAddress("fredrik.lam@learnet.se");
-        MailAddress from = new MailAddress("stefans.supershop@gmail.com");
+        var sender = new MailAddress("stefans.supershop@gmail.com");
+        var recipient = new MailAddress("fredrik.lam@learnet.se");
 
-        MailMessage email = new MailMessage(from, to);
+        var email = new MailMessage(sender, recipient);
         email.Subject = "Testing out email sending";
         email.Body = "Mailtrap test";
 
-        SmtpClient smtp = new SmtpClient();
-        smtp.Host = "smtp-mail.outlook.com";
+        var smtp = new SmtpClient();
+        smtp.Host = _outlookServer;
         smtp.Port = 587;
         smtp.Credentials = new NetworkCredential("9568381dda15d0", "9e0cc104e5ae08");
         smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
@@ -181,6 +154,34 @@ public class Mailtrapper
         catch (SmtpException ex)
         {
             Console.WriteLine(ex.ToString());
+        }
+    }
+    public void CreateMessage()
+    {
+        const string from = "stefans.supershop@gmail.com";
+        var message = new MailMessage(
+            from,
+            "niklas.o.lindblad+test@gmail.com",
+            "Hello",
+            "Din snygge jävel");
+        var client = new SmtpClient(_gmailServer, 587);
+        
+        //const string accountPassword = "iV@309cbLShT";
+		const string appPassword = "ytbqdfffihnowvvl";
+
+		client.Credentials = new NetworkCredential(from, appPassword);
+        client.UseDefaultCredentials = false;
+        client.EnableSsl = true;
+        ServicePointManager.ServerCertificateValidationCallback =
+            (s, certificate, chain, sslPolicyErrors) => true;
+
+        try
+        {
+            client.Send(message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception caught in {nameof(CreateMessage)} {ex}");
         }
     }
 }

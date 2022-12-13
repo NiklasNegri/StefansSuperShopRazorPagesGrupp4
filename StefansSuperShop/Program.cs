@@ -34,7 +34,7 @@ public class Program
         //mailtrap.MailtrapTesterOnOutlook();
         //mailtrap.CreateMessage("smtp.gmail.com");
         //mailtrap.FLCreateMessage("smtp.office365.com");
-        mailtrap.TestClient();
+        mailtrap.CreateMessage();
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args)
