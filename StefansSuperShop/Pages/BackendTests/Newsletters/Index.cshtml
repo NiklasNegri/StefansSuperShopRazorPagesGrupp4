@@ -1,0 +1,47 @@
+﻿@page
+@model StefansSuperShop.Pages.BackendTests.Newsletters.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Newsletter[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Newsletter[0].Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Newsletter[0].SendDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Newsletter) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SendDate);
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.NewsletterId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.NewsletterId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.NewsletterId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

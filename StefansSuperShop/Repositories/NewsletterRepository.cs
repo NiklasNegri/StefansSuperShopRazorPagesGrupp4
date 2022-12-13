@@ -7,9 +7,10 @@ namespace StefansSuperShop.Repositories
 {
     public interface INewsletterRepository
     {
+        public void CreateNewsletter(Newsletter newsletter);
+        public void CreateSentNewsletter(Newsletter newsletter, List<NewsletterSent> newslettersSent);
         public Newsletter GetById(int id);
         public IEnumerable<Newsletter> GetAll();
-        public void CreateNewsletter(Newsletter newsletter);
         public void EditNewsletter(Newsletter newsletter);
         public void DeleteNewsletter(Newsletter newsletter);
     }
@@ -23,20 +24,30 @@ namespace StefansSuperShop.Repositories
             _context = context;
         }
 
+        public void CreateNewsletter(Newsletter newsletter)
+        {
+            _context.Newsletters.Add(newsletter);
+            _context.SaveChanges();
+        }
+
+        public void CreateSentNewsletter(Newsletter newsletter, List<NewsletterSent> newslettersSent)
+        {
+            foreach (var newsletterSent in newslettersSent)
+            {
+                _context.NewslettersSent.Add(newsletterSent);
+            }
+            EditNewsletter(newsletter);
+            _context.SaveChanges();
+        }
+
         public Newsletter GetById(int id)
         {
-           return _context.Newsletters.Find(id);
+            return _context.Newsletters.Find(id);
         }
 
         public IEnumerable<Newsletter> GetAll()
         {
             return _context.Newsletters;
-        }
-
-        public void CreateNewsletter(Newsletter newsletter)
-        {
-            _context.Newsletters.Add(newsletter);
-            _context.SaveChanges();
         }
 
         public void EditNewsletter(Newsletter newsletter)

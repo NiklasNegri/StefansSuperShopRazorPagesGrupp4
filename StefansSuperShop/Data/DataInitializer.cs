@@ -4,18 +4,20 @@ using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StefansSuperShop.Data.Entities;
+using StefansSuperShop.Repositories;
+using StefansSuperShop.Services;
 
 namespace StefansSuperShop.Data
 {
     public class DataInitializer
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUserService _userService;
 
-        public DataInitializer(ApplicationDbContext dbContext, UserManager<IdentityUser> userManager)
+        public DataInitializer(ApplicationDbContext dbContext, IUserService userService)
         {
             _dbContext = dbContext;
-            _userManager = userManager;
+            _userService = userService;
         }
         public void SeedData()
         {
@@ -204,25 +206,11 @@ namespace StefansSuperShop.Data
 
         private void SeedUsers()
         {
-            AddUserIfNotExists("stefan.holmberg@systementor.se", "Hejsan123#", new string[] { "Admin" });
-            AddUserIfNotExists("stefan.holmberg@customer.systementor.se", "Hejsan123#", new string[] { "Customer" });
-        }
-
-
-
-        private void AddUserIfNotExists(string userName, string password, string[] roles)
-        {
-            if (_userManager.FindByEmailAsync(userName).Result != null) return;
-
-            var user = new IdentityUser
+            if (!_dbContext.ApplicationUsers.Any(u => u.Email == "admin@admin.se" || u.Id == "customer@customer.se"))
             {
-                UserName = userName,
-                Email = userName,
-                EmailConfirmed = true
-            };
-            var result = _userManager.CreateAsync(user, password).Result;
-            var r = _userManager.AddToRolesAsync(user, roles).Result;
+                _userService.RegisterUser("admin@admin.se", "Admin123#", "Admin");
+                _userService.RegisterUser("customer@customer.se", "Customer123#", "Customer");
+            }
         }
-
     }
 }
