@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StefansSuperShop.Data
+namespace StefansSuperShop.Data.Entities
 {
-    public partial class Territories
+    public partial class Territory
     {
-        public Territories()
+        public Territory()
         {
         }
 
@@ -22,7 +22,6 @@ namespace StefansSuperShop.Data
         public int RegionId { get; set; }
 
         [ForeignKey(nameof(RegionId))]
-        [InverseProperty("Territories")]
         public virtual Region Region { get; set; }
     }
 }

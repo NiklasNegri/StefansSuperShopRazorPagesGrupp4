@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StefansSuperShop.Data
+namespace StefansSuperShop.Data.Entities
 {
-    public class Newsletters
+    public class NewsletterSent
     {
         [Key]
         [Column("NewsletterID")]
         public int NewsletterId { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public bool HasBeenSent { get; set; }
+        public int AspNetUserId { get; set; }
+        public DateTime SendDate { get; set; }
     }
 }

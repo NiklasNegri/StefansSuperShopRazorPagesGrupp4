@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StefansSuperShop.Data
+namespace StefansSuperShop.Data.Entities
 {
-    public partial class Employees
+    public partial class Employee
     {
-        public Employees()
+        public Employee()
         {
-            InverseReportsToNavigation = new HashSet<Employees>();
-            Orders = new HashSet<Orders>();
+            InverseReportsToNavigation = new HashSet<Employee>();
+            Orders = new HashSet<Order>();
         }
 
         [Key]
@@ -53,12 +53,12 @@ namespace StefansSuperShop.Data
         public string PhotoPath { get; set; }
 
         [ForeignKey(nameof(ReportsTo))]
-        [InverseProperty(nameof(Employees.InverseReportsToNavigation))]
-        public virtual Employees ReportsToNavigation { get; set; }
+        [InverseProperty(nameof(InverseReportsToNavigation))]
+        public virtual Employee ReportsToNavigation { get; set; }
 
-        [InverseProperty(nameof(Employees.ReportsToNavigation))]
-        public virtual ICollection<Employees> InverseReportsToNavigation { get; set; }
+        [InverseProperty(nameof(ReportsToNavigation))]
+        public virtual ICollection<Employee> InverseReportsToNavigation { get; set; }
         [InverseProperty("Employee")]
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

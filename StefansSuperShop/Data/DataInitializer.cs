@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using StefansSuperShop.Migrations;
+using StefansSuperShop.Data.Entities;
 
 namespace StefansSuperShop.Data
 {
@@ -38,8 +38,8 @@ namespace StefansSuperShop.Data
             addProduct("Condiments", "Northwoods Cranberry Sauce", 40, 6, "Fantastic");
             addProduct("Meat/Poultry", "Mishi Kobe Niku", 97, 29, "Fantastic");
             addProduct("Seafood", "Ikura", 31, 31, "Fantastic");
-            addProduct("Dairy Products", "Queso Cabrales", 21, 22, "Fantastic");
-            addProduct("Dairy Products", "Queso Manchego La Pastora", 38, 86, "Fantastic");
+            addProduct("Dairy Product", "Queso Cabrales", 21, 22, "Fantastic");
+            addProduct("Dairy Product", "Queso Manchego La Pastora", 38, 86, "Fantastic");
             addProduct("Seafood", "Konbu", 6, 24, "Fantastic");
             addProduct("Produce", "Tofu", 23, 35, "Fantastic");
             addProduct("Condiments", "Genen Shouyu", 16, 39, "Fantastic");
@@ -58,9 +58,9 @@ namespace StefansSuperShop.Data
             addProduct("Produce", "Rössle Sauerkraut", 46, 26, "Fantastic");
             addProduct("Meat/Poultry", "Thüringer Rostbratwurst", 124, 0, "Fantastic");
             addProduct("Seafood", "Nord-Ost Matjeshering", 26, 10, "Fantastic");
-            addProduct("Dairy Products", "Gorgonzola Telino", 13, 0, "Fantastic");
-            addProduct("Dairy Products", "Mascarpone Fabioli", 32, 9, "Fantastic");
-            addProduct("Dairy Products", "Geitost", 3, 112, "Fantastic");
+            addProduct("Dairy Product", "Gorgonzola Telino", 13, 0, "Fantastic");
+            addProduct("Dairy Product", "Mascarpone Fabioli", 32, 9, "Fantastic");
+            addProduct("Dairy Product", "Geitost", 3, 112, "Fantastic");
             addProduct("Beverages", "Sasquatch Ale", 14, 111, "Fantastic");
             addProduct("Beverages", "Steeleye Stout", 18, 20, "Fantastic");
             addProduct("Seafood", "Inlagd Sill", 19, 112, "Fantastic");
@@ -86,8 +86,8 @@ namespace StefansSuperShop.Data
             addProduct("Grains/Cereals", "Gnocchi di nonna Alice", 38, 21, "Fantastic");
             addProduct("Grains/Cereals", "Ravioli Angelo", 20, 36, "Fantastic");
             addProduct("Seafood", "Escargots de Bourgogne", 13, 62, "Fantastic");
-            addProduct("Dairy Products", "Raclette Courdavault", 55, 79, "Fantastic");
-            addProduct("Dairy Products", "Camembert Pierrot", 34, 19, "Fantastic");
+            addProduct("Dairy Product", "Raclette Courdavault", 55, 79, "Fantastic");
+            addProduct("Dairy Product", "Camembert Pierrot", 34, 19, "Fantastic");
             addProduct("Condiments", "Sirop d'érable", 29, 113, "Fantastic");
             addProduct("Confections", "Tarte au sucre", 49, 17, "Fantastic");
             addProduct("Condiments", "Vegie-spread", 44, 24, "Fantastic");
@@ -96,10 +96,10 @@ namespace StefansSuperShop.Data
             addProduct("Condiments", "Louisiana Hot Spiced Okra", 17, 4, "Fantastic");
             addProduct("Beverages", "Laughing Lumberjack Lager", 14, 52, "Fantastic");
             addProduct("Confections", "Scottish Longbreads", 13, 6, "Fantastic");
-            addProduct("Dairy Products", "Gudbrandsdalsost", 36, 26, "Fantastic");
+            addProduct("Dairy Product", "Gudbrandsdalsost", 36, 26, "Fantastic");
             addProduct("Beverages", "Outback Lager", 15, 15, "Fantastic");
-            addProduct("Dairy Products", "Flotemysost", 22, 26, "Fantastic");
-            addProduct("Dairy Products", "Mozzarella di Giovanni", 35, 14, "Fantastic");
+            addProduct("Dairy Product", "Flotemysost", 22, 26, "Fantastic");
+            addProduct("Dairy Product", "Mozzarella di Giovanni", 35, 14, "Fantastic");
             addProduct("Seafood", "Röd Kaviar", 15, 101, "Fantastic");
             addProduct("Produce", "Longlife Tofu", 10, 4, "Fantastic");
             addProduct("Beverages", "Rhönbräu Klosterbier", 8, 125, "Fantastic");
@@ -111,7 +111,7 @@ namespace StefansSuperShop.Data
         private void addProduct(string category, string name, int pris, int stocklevel, string description)
         {
             if (_dbContext.Products.Any(e => e.ProductName == name)) return;
-            _dbContext.Products.Add(new Products
+            _dbContext.Products.Add(new Product
             {
                 ProductName = name,
                 Category = _dbContext.Categories.First(c=>c.CategoryName == category),
@@ -126,7 +126,7 @@ namespace StefansSuperShop.Data
             AddCategoryIfNotExists("Beverages", "Soft drinks, coffees, teas, beers, and ales");
             AddCategoryIfNotExists("Condiments", "Sweet and savory sauces, relishes, spreads, and seasonings");
             AddCategoryIfNotExists("Confections", "Desserts, candies, and sweet breads");
-            AddCategoryIfNotExists("Dairy Products", "Cheeses");
+            AddCategoryIfNotExists("Dairy Product", "Cheeses");
             AddCategoryIfNotExists("Grains/Cereals", "Breads, crackers, pasta, and cereal");
             AddCategoryIfNotExists("Meat/Poultry", "Prepared meats");
             AddCategoryIfNotExists("Produce", "Dried fruit and bean curd");
@@ -137,7 +137,7 @@ namespace StefansSuperShop.Data
         private void AddCategoryIfNotExists(string name, string description)
         {
             if (_dbContext.Categories.Any(e => e.CategoryName == name)) return;
-            _dbContext.Categories.Add(new Categories
+            _dbContext.Categories.Add(new Category
             {
                 CategoryName = name, Description = description,
                 Picture = GetPicture(name)
@@ -150,7 +150,7 @@ namespace StefansSuperShop.Data
             if (name == "Beverages") return ConvertHexStringToByteArray(img1);
             if (name == "Condiments") return ConvertHexStringToByteArray(img2);
             if (name == "Confections") return ConvertHexStringToByteArray(img3);
-            if (name == "Dairy Products") return ConvertHexStringToByteArray(img4);
+            if (name == "Dairy Product") return ConvertHexStringToByteArray(img4);
             if (name == "Grains/Cereals") return ConvertHexStringToByteArray(img5);
             if (name == "Meat/Poultry") return ConvertHexStringToByteArray(img6);
             if (name == "Produce") return ConvertHexStringToByteArray(img7);

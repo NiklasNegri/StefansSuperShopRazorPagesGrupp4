@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StefansSuperShop.Data
+namespace StefansSuperShop.Data.Entities
 {
-    public partial class Categories
+    public partial class Category
     {
-        public Categories()
+        public Category()
         {
-            Products = new HashSet<Products>();
+            Products = new HashSet<Product>();
         }
 
         [Key]
@@ -26,6 +26,6 @@ namespace StefansSuperShop.Data
         public byte[] Picture { get; set; }
 
         [InverseProperty("Category")]
-        public virtual ICollection<Products> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

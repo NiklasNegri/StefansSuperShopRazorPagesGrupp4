@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using StefansSuperShop.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,22 +18,22 @@ namespace StefansSuperShop.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<OrderDetails>()
+            modelBuilder.Entity<OrderDetail>()
                 .HasKey(e => new { e.OrderId, e.ProductId });
         }
 
-        public virtual DbSet<Categories> Categories { get; set; }
-        public virtual DbSet<Customers> Customers { get; set; }
-        public virtual DbSet<Employees> Employees { get; set; }
-        public virtual DbSet<OrderDetails> OrderDetails { get; set; }
-        public virtual DbSet<Orders> Orders { get; set; }
-        public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Region> Region { get; set; }
-        public virtual DbSet<Shippers> Shippers { get; set; }
-        public virtual DbSet<Suppliers> Suppliers { get; set; }
-        public virtual DbSet<Newsletters> Newsletters { get; set; }
-        public virtual DbSet<NewslettersSent> NewslettersSents { get; set; }
-        public virtual DbSet<AspNetUsers> AspUsers { get; set; }
+        public virtual DbSet<Shipper> Shippers { get; set; }
+        public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<Newsletter> Newsletters { get; set; }
+        public virtual DbSet<NewsletterSent> NewslettersSent { get; set; }
+        public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
     }
 }

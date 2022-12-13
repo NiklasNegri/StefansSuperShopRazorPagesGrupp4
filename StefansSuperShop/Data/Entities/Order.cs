@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StefansSuperShop.Data
+namespace StefansSuperShop.Data.Entities
 {
-    public partial class Orders
+    public partial class Order
     {
-        public Orders()
+        public Order()
         {
-            OrderDetails = new HashSet<OrderDetails>();
+            OrderDetails = new HashSet<OrderDetail>();
         }
 
         [Key]
@@ -43,15 +43,15 @@ namespace StefansSuperShop.Data
         public string ShipCountry { get; set; }
 
         [ForeignKey(nameof(CustomerId))]
-        [InverseProperty(nameof(Customers.Orders))]
-        public virtual Customers Customer { get; set; }
+        [InverseProperty(nameof(Entities.Customer.Orders))]
+        public virtual Customer Customer { get; set; }
         [ForeignKey(nameof(EmployeeId))]
-        [InverseProperty(nameof(Employees.Orders))]
-        public virtual Employees Employee { get; set; }
+        [InverseProperty(nameof(Entities.Employee.Orders))]
+        public virtual Employee Employee { get; set; }
         [ForeignKey(nameof(ShipVia))]
-        [InverseProperty(nameof(Shippers.Orders))]
-        public virtual Shippers ShipViaNavigation { get; set; }
+        [InverseProperty(nameof(Shipper.Orders))]
+        public virtual Shipper ShipViaNavigation { get; set; }
         [InverseProperty("Order")]
-        public virtual ICollection<OrderDetails> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
