@@ -10,7 +10,6 @@ namespace StefansSuperShop.Data.Entities
         [Key]
         [Column("NewsletterID")]
         public int NewsletterId { get; set; }
-        public int AspNetUserId { get; set; }
-        public DateTime SendDate { get; set; }
+        public int ApplicationUserId { get; set; }
     }
 }

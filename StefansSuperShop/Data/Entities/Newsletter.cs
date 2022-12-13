@@ -12,6 +12,6 @@ namespace StefansSuperShop.Data.Entities
         public int NewsletterId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public bool HasBeenSent { get; set; }
+        public DateTime SendDate { get; set; }
     }
 }
