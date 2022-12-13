@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\DTOs\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
