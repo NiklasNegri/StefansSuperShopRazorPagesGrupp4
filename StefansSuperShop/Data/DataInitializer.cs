@@ -96,7 +96,7 @@ namespace StefansSuperShop.Data
             addProduct("Condiments", "Louisiana Hot Spiced Okra", 17, 4, "Fantastic");
             addProduct("Beverages", "Laughing Lumberjack Lager", 14, 52, "Fantastic");
             addProduct("Confections", "Scottish Longbreads", 13, 6, "Fantastic");
-            addProduct("Dairy Product", "Gudbrandsdalsost", 36, 26, "Fantastic");
+            addProduct("Dairy Products", "Gudbrandsdalsost", 36, 26, "Fantastic");
             addProduct("Beverages", "Outback Lager", 15, 15, "Fantastic");
             addProduct("Dairy Products", "Flotemysost", 22, 26, "Fantastic");
             addProduct("Dairy Products", "Mozzarella di Giovanni", 35, 14, "Fantastic");
