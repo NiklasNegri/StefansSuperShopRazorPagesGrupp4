@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StefansSuperShop.Configuration;
 using StefansSuperShop.Data;
 
 namespace StefansSuperShop;
@@ -29,6 +30,7 @@ public class Startup
             .AddEntityFrameworkStores<ApplicationDbContext>();
         services.AddTransient<DataInitializer>();
         services.AddRazorPages();
+		services.Configure<MailSettings>(Configuration.GetSection(nameof(MailSettings)));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
