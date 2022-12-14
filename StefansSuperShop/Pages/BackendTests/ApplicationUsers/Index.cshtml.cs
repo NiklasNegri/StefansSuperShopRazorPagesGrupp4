@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using StefansSuperShop.Data;
 using StefansSuperShop.Data.Entities;
+using StefansSuperShop.Data.Helpers;
 
 namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
 {
     public class IndexModel : PageModel
     {
-        private readonly StefansSuperShop.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public IndexModel(StefansSuperShop.Data.ApplicationDbContext context)
+        public IndexModel(ApplicationDbContext context)
         {
             _context = context;
         }

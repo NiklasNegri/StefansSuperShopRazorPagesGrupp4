@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using StefansSuperShop.Data.Entities;
+using StefansSuperShop.Data.DTOs;
 using StefansSuperShop.Services;
 
 namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
@@ -17,17 +17,17 @@ namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
         }
 
         [BindProperty]
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUserDTO Model { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            _userService.GetByEmail(id);
+            _userService.GetById(id);
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string id)
         {
-            _userService.DeleteUser(id);
+            await _userService.DeleteUser(id);
 
             return RedirectToPage("./Index");
         }

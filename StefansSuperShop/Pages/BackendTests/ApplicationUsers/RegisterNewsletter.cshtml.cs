@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
 {
-    public class CreateModel : PageModel
+    public class RegisterNewsletterModel : PageModel
     {
         private readonly IUserService _userService;
 
-        public CreateModel(IUserService userService)
+        public RegisterNewsletterModel(IUserService userService)
         {
             _userService = userService;
         }
@@ -32,7 +32,6 @@ namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
             }
 
             Model.UserName = Model.NewEmail;
-            Model.Role = Request.Form["role"];
             await _userService.RegisterUser(Model);
 
             return RedirectToPage("./Index");

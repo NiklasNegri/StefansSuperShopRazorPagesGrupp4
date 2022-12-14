@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using StefansSuperShop.Data;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using StefansSuperShop.Data.DTOs;
 using StefansSuperShop.Data.Entities;
+using StefansSuperShop.Data.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,44 +12,53 @@ namespace StefansSuperShop.Repositories
 {
     public interface IUserRepository
     {
-        public void RegisterUser(ApplicationUser user, string password = null, string role = null);
-        public void RegisterUpgradeFromNewsletter(ApplicationUser user, string password, string role);
+        public Task RegisterUser(ApplicationUserDTO model);
+        public Task RegisterUpgradeFromNewsletter(ApplicationUserDTO model);
         public ApplicationUser GetById(string id);
         public IEnumerable<ApplicationUser> GetAll();
-        public void UpdateUser(ApplicationUser user, string password = null);
-        public void UpdateEmail(ApplicationUser user, string email);
-        public void UpdatePassword(ApplicationUser user, string oldPassword, string newPassword);
-        public void DeleteUser(ApplicationUser user);
-
+        public Task UpdateEmail(ApplicationUserDTO model);
+        public Task UpdatePassword(ApplicationUserDTO model);
+        public Task UpdateNewsletterActive(ApplicationUserDTO model);
+        public Task DeleteUser(string id);
     }
+
     public class UserRepository : IUserRepository
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;   
 
-        public UserRepository(UserManager<IdentityUser> userManager, ApplicationDbContext context)
+        public UserRepository(
+            UserManager<ApplicationUser> userManager,
+            ApplicationDbContext context,
+            IMapper mapper)
         {
             _userManager = userManager;
             _context = context;
+            _mapper = mapper;
         }
 
-        public void RegisterUser(ApplicationUser user, string password, string role)
+        public async Task RegisterUser(ApplicationUserDTO model)
         {
-            if (password != null)
+            var user = _mapper.Map<ApplicationUser>(model);
+            user.Id = Guid.NewGuid().ToString();
+            user.Email = model.NewEmail;
+
+            if (model.NewPassword == null)
             {
-                var result = _userManager.CreateAsync(user, password).Result;
-                var r = _userManager.AddToRoleAsync(user, role).Result;
+                user.NewsletterActive = true;
+                await _userManager.CreateAsync(user);
+                return;
             }
-            else
-            {
-                var result = _userManager.CreateAsync(user).Result;
-            }
+
+            await _userManager.CreateAsync(user, model.NewPassword);
         }
         
-        public void RegisterUpgradeFromNewsletter(ApplicationUser user, string password, string role)
+        public async Task RegisterUpgradeFromNewsletter(ApplicationUserDTO model)
         {
-            _userManager.AddPasswordAsync(user, password);
-            _userManager.AddToRoleAsync(user, role);
+            var user = GetById(model.Id);
+            await _userManager.AddPasswordAsync(user, model.NewPassword);
+            await _userManager.AddToRoleAsync(user, model.Role);
         }
 
         public ApplicationUser GetById(string id)
@@ -58,29 +71,33 @@ namespace StefansSuperShop.Repositories
             return _context.ApplicationUsers;
         }
 
-        public void UpdateUser(ApplicationUser user, string password)
+        public async Task UpdateEmail(ApplicationUserDTO model)
         {
-            if (password != null)
-            {
-                user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, password);
-            }
-            _userManager.UpdateAsync(user);
+            var user = GetById(model.Id);
+            user.UserName = model.NewEmail;
+            var token = _userManager.GenerateChangeEmailTokenAsync(user, model.NewEmail).ToString();
+            await _userManager.ChangeEmailAsync(user, model.NewEmail, token);
+            await _userManager.UpdateNormalizedEmailAsync(user);
+            await _userManager.UpdateAsync(user);
         }
 
-        public void UpdateEmail(ApplicationUser user, string email)
+        public async Task UpdatePassword(ApplicationUserDTO model)
         {
-            var emailConfirmationToken = _userManager.GenerateChangeEmailTokenAsync(user, email).ToString();
-            var result = _userManager.ChangeEmailAsync(user, email, emailConfirmationToken);
+            var user = GetById(model.Id);
+            await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
         }
 
-        public void UpdatePassword(ApplicationUser user, string oldPassword, string newPassword)
+        public async Task UpdateNewsletterActive(ApplicationUserDTO model)
         {
-            _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            var user = GetById(model.Id);
+            user.NewsletterActive = model.NewsletterActive;
+            await _userManager.UpdateAsync(user);
         }
 
-        public void DeleteUser(ApplicationUser user)
+        public async Task DeleteUser(string id)
         {
-            _userManager.DeleteAsync(user);
+            var user = GetById(id);
+            await _userManager.DeleteAsync(user);
         }
     }
 }

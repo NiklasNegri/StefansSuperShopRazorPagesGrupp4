@@ -10,21 +10,48 @@
 <h4>Users</h4>
 <hr />
 <div class="row">
+    <h4>Change email</h4>
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ApplicationUser.Id" />
+            <input type="hidden" asp-for="Model.Id" />
             <div class="form-group">
-                <label asp-for="ApplicationUser.Email" class="control-label"></label>
-                <input asp-for="ApplicationUser.Email" class="form-control" />
-                <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
+                <label asp-for="Model.NewEmail" class="control-label"></label>
+                <input asp-for="Model.NewEmail" class="form-control" />
+                <span asp-validation-for="Model.NewEmail" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ApplicationUser.PasswordHash" class="control-label"></label>
-                <input asp-for="ApplicationUser.PasswordHash" class="form-control" />
-                <span asp-validation-for="ApplicationUser.PasswordHash" class="text-danger"></span>
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <h4>Change password</h4>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Model.Id" />
+            <div class="form-group">
+                <label asp-for="Model.NewPassword" class="control-label"></label>
+                <input asp-for="Model.NewPassword" class="form-control" />
+                <span asp-validation-for="Model.NewPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Model.CurrentPassword" class="control-label"></label>
+                <input asp-for="Model.CurrentPassword" class="form-control" />
+                <span asp-validation-for="Model.CurrentPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <h4>Subscribe/Unsubscribe from newsletter</h4>
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Model.NewsletterActive" class="control-label"></label>
+                <input asp-for="Model.NewsletterActive" class="form-control" />
+                <span asp-validation-for="Model.NewsletterActive" class="text-danger"></span>
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>

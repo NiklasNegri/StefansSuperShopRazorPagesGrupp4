@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StefansSuperShop.Data.Entities;
-using StefansSuperShop.Data;
 using System.Collections.Generic;
+using StefansSuperShop.Data.Helpers;
 
 namespace StefansSuperShop.Repositories
 {

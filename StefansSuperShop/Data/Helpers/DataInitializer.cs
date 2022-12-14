@@ -7,7 +7,7 @@ using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Repositories;
 using StefansSuperShop.Services;
 
-namespace StefansSuperShop.Data
+namespace StefansSuperShop.Data.Helpers
 {
     public class DataInitializer
     {
@@ -116,7 +116,7 @@ namespace StefansSuperShop.Data
             _dbContext.Products.Add(new Product
             {
                 ProductName = name,
-                Category = _dbContext.Categories.First(c=>c.CategoryName == category),
+                Category = _dbContext.Categories.First(c => c.CategoryName == category),
                 UnitsInStock = Convert.ToInt16(stocklevel),
                 UnitPrice = pris,
                 Discontinued = false,
@@ -141,7 +141,8 @@ namespace StefansSuperShop.Data
             if (_dbContext.Categories.Any(e => e.CategoryName == name)) return;
             _dbContext.Categories.Add(new Category
             {
-                CategoryName = name, Description = description,
+                CategoryName = name,
+                Description = description,
                 Picture = GetPicture(name)
 
             });
@@ -164,7 +165,7 @@ namespace StefansSuperShop.Data
         {
             if (hexString.Length % 2 != 0)
             {
-                throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "The binary key cannot have an odd number of digits: {0}", hexString));
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The binary key cannot have an odd number of digits: {0}", hexString));
             }
 
             byte[] data = new byte[hexString.Length / 2];
@@ -208,8 +209,8 @@ namespace StefansSuperShop.Data
         {
             if (!_dbContext.ApplicationUsers.Any(u => u.Email == "admin@admin.se" || u.Id == "customer@customer.se"))
             {
-                _userService.RegisterUser("admin@admin.se", "Admin123#", "Admin");
-                _userService.RegisterUser("customer@customer.se", "Customer123#", "Customer");
+                _userService.RegisterUser(new DTOs.ApplicationUserDTO { CurrentEmail = "admin@admin.se", NewPassword = "Admin123#", Role = "Admin" });
+                _userService.RegisterUser(new DTOs.ApplicationUserDTO { CurrentEmail = "customer@customer.se", NewPassword = "Customer123#", Role = "Customer" });
             }
         }
     }

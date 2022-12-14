@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using StefansSuperShop.Data.Entities;
+using StefansSuperShop.Data.DTOs;
 using StefansSuperShop.Services;
 
 namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
@@ -16,17 +16,25 @@ namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
         }
 
         [BindProperty]
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUserDTO Model { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            _userService.GetByEmail(id);
+            _userService.GetById(id);
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string id)
         {
-            _userService.UpdateUser(id, ApplicationUser.Email, ApplicationUser.PasswordHash);
+            Model.Id = id;
+            if (Model.NewEmail != null || Model.NewEmail != null)
+            {
+                await _userService.UpdateUser(Model);
+            }
+            else if (_userService.GetById(id).NewsletterActive != Model.NewsletterActive)
+            {
+                await _userService.UpdateNewsletterActive(Model);
+            }
 
             return RedirectToPage("./Index");
         }

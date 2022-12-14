@@ -1,20 +1,22 @@
-﻿using StefansSuperShop.Data.Entities;
+﻿using AutoMapper;
+using StefansSuperShop.Data.DTOs;
+using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace StefansSuperShop.Services
 {
     public interface IUserService
     {
-        public void RegisterUser(string email, string password, string role);
-        public void RegisterNewsletterOnly(string email);
-        public ApplicationUser GetByEmail(string email);
+        public Task RegisterUser(ApplicationUserDTO model);
+        public ApplicationUser GetById(string email);
         public IEnumerable<ApplicationUser> GetAll();
-        public void UpdateUser(string id, string email = null, string password = null);
-        public void UpdateUserFromNewsletter(string email, string password);
-        public void ToggleNewsletter(string email, bool state);
-        public void DeleteUser(string email);
+        public Task UpdateUser(ApplicationUserDTO model);
+        public Task UpdateUserFromNewsletter(ApplicationUserDTO model);
+        public Task UpdateNewsletterActive(ApplicationUserDTO model);
+        public Task DeleteUser(string id);
     }
     public class UserService : IUserService
     {
@@ -24,113 +26,55 @@ namespace StefansSuperShop.Services
             _userRepository = userRepository;
         }
 
-        public void RegisterUser(string email, string password, string role)
+        public async Task RegisterUser(ApplicationUserDTO model)
         {
-            if (!EmailInUse(email))
+            if (GetAll().Any(u => u.Email == model.NewEmail))
             {
-                var user = new ApplicationUser
-                {
-                    UserName = email,
-                    Email = email,
-                    EmailConfirmed = true,
-                    NewsletterActive = false
-                };
-
-                _userRepository.RegisterUser(user, password, role);
+                throw new System.Exception("User with that email is already registered!");
             }
+            await _userRepository.RegisterUser(model);
         }
 
-        public void RegisterNewsletterOnly(string email)
-        {
-            if (!EmailInUse(email))
-            {
-                var user = new ApplicationUser
-                {
-                    UserName = email,
-                    Email = email,
-                    EmailConfirmed = true,
-                    NewsletterActive = true
-                };
-
-                _userRepository.RegisterUser(user);
-            }           
-        }
-
-        public ApplicationUser GetByEmail(string email) => _userRepository.GetById(email);
+        public ApplicationUser GetById(string id) => _userRepository.GetById(id);
 
         public IEnumerable<ApplicationUser> GetAll() => _userRepository.GetAll();
 
-        public void UpdateUser(string id, string email, string password)
-        {
-            if (UserNotExist(id))
-            {
-                var user = _userRepository.GetById(id);
 
-                if (email != null && !EmailInUse(email))
-                {
-                    user.UserName = email;
-                    user.Email = email;
-                    _userRepository.UpdateEmail(user, email);
-                }
+        public async Task UpdateUser(ApplicationUserDTO model)
+        {
+            if (GetById(model.Id) == null)
+            {
+                throw new System.Exception("User does not exist!");
+            }
+
+            if (model.NewEmail != null)
+            {
+                await _userRepository.UpdateEmail(model);
+            }
+            else if (model.NewPassword != null)
+            {
+                await _userRepository.UpdatePassword(model);
             }
         }
 
-        public void UpdatePassword(string id, string oldPassword, string newPassword)
-        { 
-            if (!UserNotExist(id))
-            {
-                var user = _userRepository.GetById(id);
-                _userRepository.UpdatePassword(user, oldPassword, newPassword);
-            }
+        public async Task UpdateUserFromNewsletter(ApplicationUserDTO model)
+        {
+            await _userRepository.RegisterUpgradeFromNewsletter(model);
         }
 
-        public void UpdateUserFromNewsletter(string id, string password)
+        public async Task UpdateNewsletterActive(ApplicationUserDTO model)
         {
-            if (!UserNotExist(id))
-            {
-                var user = _userRepository.GetById(id);
-                var role = "Customer";
-                _userRepository.RegisterUpgradeFromNewsletter(user, password, role);
-            }
+            
+            await _userRepository.UpdateNewsletterActive(model);
         }
 
-        public void ToggleNewsletter(string id, bool state)
+        public async Task DeleteUser(string id)
         {
-            if (!UserNotExist(id))
+            if (GetById(id) == null)
             {
-                var user = _userRepository.GetById(id);
-                user.NewsletterActive = state;
-                _userRepository.UpdateUser(user);
+                throw new System.Exception("User does not exist!");
             }
-        }
-
-        public void DeleteUser(string id)
-        {
-            if (!UserNotExist(id))
-            {
-                var user = _userRepository.GetById(id);
-                _userRepository.DeleteUser(user);
-            }
-        }
-
-        private bool EmailInUse(string email)
-        {
-            if (_userRepository.GetAll().Any(u => u.Email == email))
-            {
-                return true;
-                throw new System.Exception("Email is already in use");
-            }
-            return false;
-        }
-
-        private bool UserNotExist(string id)
-        {
-            if (_userRepository.GetAll().Any(u => u.Id != id))
-            {
-                return true;
-                throw new System.Exception("User with that email does not exist");
-            }
-            return false;
+            await _userRepository.DeleteUser(id);
         }
     }
 }

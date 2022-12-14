@@ -1,14 +1,12 @@
 ﻿@page
-@model StefansSuperShop.Pages.BackendTests.ApplicationUsers.CreateModel
+@model StefansSuperShop.Pages.BackendTests.ApplicationUsers.RegisterNewsletterModel
 
 @{
-    ViewData["Title"] = "Register User";
+    ViewData["Title"] = "Register newsletter only";
 }
 
-<h2>Create</h2>
+<h2>Register newsletter only</h2>
 
-<h4>Newsletter</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
@@ -18,16 +16,9 @@
                 <input asp-for="Model.NewEmail" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Model.NewPassword" class="control-label"></label>
-                <input asp-for="Model.NewPassword" class="form-control" />
-            </div>
-            <div class="form-group">
-                <select name="role">
-                    <label asp-for="Model.Role" class="control-label"></label>
-                    <option value="">Select a role</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Customer">Customer</option>
-                </select>
+                <label asp-for="Model.NewsletterActive" class="control-label"></label>
+                <input asp-for="Model.NewsletterActive" class="form-control" />
+                <span asp-validation-for="Model.NewsletterActive" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
