@@ -11,8 +11,8 @@ namespace StefansSuperShop.Services
     public interface IUserService
     {
         public Task RegisterUser(ApplicationUserDTO model);
-        public ApplicationUser GetById(string email);
-        public IEnumerable<ApplicationUser> GetAll();
+        public Task<ApplicationUser> GetById(string email);
+        public Task<IAsyncEnumerable<ApplicationUser>> GetAll();
         public Task UpdateUser(ApplicationUserDTO model);
         public Task UpdateUserFromNewsletter(ApplicationUserDTO model);
         public Task UpdateNewsletterActive(ApplicationUserDTO model);
@@ -35,10 +35,9 @@ namespace StefansSuperShop.Services
             await _userRepository.RegisterUser(model);
         }
 
-        public ApplicationUser GetById(string id) => _userRepository.GetById(id);
+        public Task<ApplicationUser> GetById(string id) => _userRepository.GetById(id);
 
-        public IEnumerable<ApplicationUser> GetAll() => _userRepository.GetAll();
-
+        public Task<IAsyncEnumerable<ApplicationUser>> GetAll() => _userRepository.GetAll();
 
         public async Task UpdateUser(ApplicationUserDTO model)
         {

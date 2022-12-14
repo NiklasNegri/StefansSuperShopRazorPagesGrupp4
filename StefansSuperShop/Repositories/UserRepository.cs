@@ -14,8 +14,8 @@ namespace StefansSuperShop.Repositories
     {
         public Task RegisterUser(ApplicationUserDTO model);
         public Task RegisterUpgradeFromNewsletter(ApplicationUserDTO model);
-        public ApplicationUser GetById(string id);
-        public IEnumerable<ApplicationUser> GetAll();
+        public Task<ApplicationUser> GetById(string id);
+        public Task<IAsyncEnumerable<ApplicationUser>> GetAll();
         public Task UpdateEmail(ApplicationUserDTO model);
         public Task UpdatePassword(ApplicationUserDTO model);
         public Task UpdateNewsletterActive(ApplicationUserDTO model);
@@ -61,14 +61,14 @@ namespace StefansSuperShop.Repositories
             await _userManager.AddToRoleAsync(user, model.Role);
         }
 
-        public ApplicationUser GetById(string id)
+        public async Task<ApplicationUser> GetById(string id)
         {
-            return _context.ApplicationUsers.Find(id);
+            return await _context.ApplicationUsers.FindAsync(id);
         }
 
-        public IEnumerable<ApplicationUser> GetAll()
+        public async Task<IAsyncEnumerable<ApplicationUser>> GetAll()
         {
-            return _context.ApplicationUsers;
+            return await _context.ApplicationUsers.AsAsyncEnumerable;
         }
 
         public async Task UpdateEmail(ApplicationUserDTO model)
