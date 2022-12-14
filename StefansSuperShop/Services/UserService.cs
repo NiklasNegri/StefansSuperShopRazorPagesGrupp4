@@ -64,13 +64,13 @@ namespace StefansSuperShop.Services
 
         public async Task UpdateNewsletterActive(ApplicationUserDTO model)
         {
-            
             await _userRepository.UpdateNewsletterActive(model);
         }
 
         public async Task DeleteUser(string id)
         {
-            if (GetById(id) == null)
+            var user = await GetById(id);
+            if (user == null)
             {
                 throw new Exception("User does not exist!");
             }
