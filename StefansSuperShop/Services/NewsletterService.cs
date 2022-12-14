@@ -2,6 +2,8 @@
 using StefansSuperShop.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace StefansSuperShop.Services
@@ -45,15 +47,12 @@ namespace StefansSuperShop.Services
             var recipients = await _userRepository.GetAll();
             var newslettersSent = new List<NewsletterSent>();
 
-            foreach (var recipient in recipients)
-            {
-                var newsletterSent = new NewsletterSent()
+            var newsletterSent = recipients.Select(
+                recipient => new NewsletterSent()
                 {
                     NewsletterId = newsletter.NewsletterId,
                     ApplicationUserId = Int32.Parse(recipient.Id)
-                };
-                newslettersSent.Add(newsletterSent);
-            }
+                });
 
             newsletter.SendDate = DateTime.Now;
 
