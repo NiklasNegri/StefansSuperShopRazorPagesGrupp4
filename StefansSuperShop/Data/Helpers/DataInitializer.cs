@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using StefansSuperShop.Data.Entities;
+using StefansSuperShop.Services;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using StefansSuperShop.Data.Entities;
-using StefansSuperShop.Repositories;
-using StefansSuperShop.Services;
 
 namespace StefansSuperShop.Data.Helpers
 {

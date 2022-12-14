@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StefansSuperShop.Data.Entities;
-using System.Collections.Generic;
 using StefansSuperShop.Data.Helpers;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StefansSuperShop.Repositories

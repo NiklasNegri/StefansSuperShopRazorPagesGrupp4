@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using StefansSuperShop.Data.DTOs;
+﻿using StefansSuperShop.Data.DTOs;
 using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,7 +31,7 @@ namespace StefansSuperShop.Services
             var users = await GetAll();
             if (users.Any(u => u.Email == model.NewEmail))
             {
-                throw new System.Exception("User with that email is already registered!");
+                throw new Exception("User with that email is already registered!");
             }
             await _userRepository.RegisterUser(model);
         }
@@ -44,7 +44,7 @@ namespace StefansSuperShop.Services
         {
             if (GetById(model.Id) == null)
             {
-                throw new System.Exception("User does not exist!");
+                throw new Exception("User does not exist!");
             }
 
             if (model.NewEmail != null)
@@ -72,7 +72,7 @@ namespace StefansSuperShop.Services
         {
             if (GetById(id) == null)
             {
-                throw new System.Exception("User does not exist!");
+                throw new Exception("User does not exist!");
             }
             await _userRepository.DeleteUser(id);
         }

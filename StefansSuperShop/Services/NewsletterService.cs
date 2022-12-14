@@ -39,7 +39,7 @@ namespace StefansSuperShop.Services
 
             if (newsletter == null)
             {
-                throw new System.Exception("Newsletter with that id does not exist");
+                throw new Exception("Newsletter with that id does not exist");
             }
 
             var recipients = await _userRepository.GetAll();
@@ -87,7 +87,7 @@ namespace StefansSuperShop.Services
 
             if (newsletter == null)
             {
-                throw new System.Exception("Newsletter with that ID does not exist");
+                throw new Exception("Newsletter with that ID does not exist");
             }
 
             return newsletter;

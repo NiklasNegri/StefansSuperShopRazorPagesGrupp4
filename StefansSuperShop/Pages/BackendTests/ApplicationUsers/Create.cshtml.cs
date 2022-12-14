@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Data.DTOs;
 using StefansSuperShop.Services;
 using System.Threading.Tasks;
