@@ -12,7 +12,7 @@ namespace StefansSuperShop.Services
     {
         public Task RegisterUser(ApplicationUserDTO model);
         public Task<ApplicationUser> GetById(string email);
-        public Task<IAsyncEnumerable<ApplicationUser>> GetAll();
+        public Task<IEnumerable<ApplicationUser>> GetAll();
         public Task UpdateUser(ApplicationUserDTO model);
         public Task UpdateUserFromNewsletter(ApplicationUserDTO model);
         public Task UpdateNewsletterActive(ApplicationUserDTO model);
@@ -28,7 +28,8 @@ namespace StefansSuperShop.Services
 
         public async Task RegisterUser(ApplicationUserDTO model)
         {
-            if (GetAll().Any(u => u.Email == model.NewEmail))
+            var users = await GetAll();
+            if (users.Any(u => u.Email == model.NewEmail))
             {
                 throw new System.Exception("User with that email is already registered!");
             }
@@ -37,7 +38,7 @@ namespace StefansSuperShop.Services
 
         public Task<ApplicationUser> GetById(string id) => _userRepository.GetById(id);
 
-        public Task<IAsyncEnumerable<ApplicationUser>> GetAll() => _userRepository.GetAll();
+        public Task<IEnumerable<ApplicationUser>> GetAll() => _userRepository.GetAll();
 
         public async Task UpdateUser(ApplicationUserDTO model)
         {

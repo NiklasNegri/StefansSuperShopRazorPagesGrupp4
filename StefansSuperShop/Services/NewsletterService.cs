@@ -2,17 +2,18 @@
 using StefansSuperShop.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StefansSuperShop.Services
 {
     public interface INewsletterService
     {
-        public void CreateNewsletter(string title, string content);
-        public void CreateSentNewsletter(int id);
-        public Newsletter GetById(int id);
-        public IEnumerable<Newsletter> GetAll();
-        public void EditNewsletter(int id, string title = null, string content = null);
-        public void DeleteNewsletter(int id);
+        public Task CreateNewsletter(string title, string content);
+        public Task CreateSentNewsletter(int id);
+        public Task<Newsletter> GetById(int id);
+        public Task<IEnumerable<Newsletter>> GetAll();
+        public Task EditNewsletter(int id, string title = null, string content = null);
+        public Task DeleteNewsletter(int id);
     }
 
     public class NewsletterService : INewsletterService
@@ -26,22 +27,22 @@ namespace StefansSuperShop.Services
             _userRepository = userRepository;
         }
 
-        public void CreateNewsletter(string title, string content)
+        public async Task CreateNewsletter(string title, string content)
         {
             var newsletter = new Newsletter { Title = title, Content = content };
-            _newsletterRepository.CreateNewsletter(newsletter);
+            await _newsletterRepository.CreateNewsletter(newsletter);
         }
 
-        public void CreateSentNewsletter(int id)
+        public async Task CreateSentNewsletter(int id)
         {
-            var newsletter = _newsletterRepository.GetById(id);
+            var newsletter = await _newsletterRepository.GetById(id);
 
             if (newsletter == null)
             {
                 throw new System.Exception("Newsletter with that id does not exist");
             }
 
-            var recipients = _userRepository.GetAll();
+            var recipients = await _userRepository.GetAll();
             var newslettersSent = new List<NewsletterSent>();
 
             foreach (var recipient in recipients)
@@ -56,33 +57,33 @@ namespace StefansSuperShop.Services
 
             newsletter.SendDate = DateTime.Now;
 
-            _newsletterRepository.CreateSentNewsletter(newsletter, newslettersSent);
+            await _newsletterRepository.CreateSentNewsletter(newsletter, newslettersSent);
         }
 
-        public Newsletter GetById(int id) => _newsletterRepository.GetById(id);
+        public async Task<Newsletter> GetById(int id) => await _newsletterRepository.GetById(id);
 
-        public IEnumerable<Newsletter> GetAll() => _newsletterRepository.GetAll();
+        public async Task<IEnumerable<Newsletter>> GetAll() => await _newsletterRepository.GetAll();
 
-        public void EditNewsletter(int id, string title, string content)
+        public async Task EditNewsletter(int id, string title, string content)
         {
-            var newsletter = CheckNewsletterExists(id);
+            var newsletter = await CheckNewsletterExists(id);
 
             if (title != null) newsletter.Title = title;
             if (content != null) newsletter.Content = content;
 
-            _newsletterRepository.EditNewsletter(newsletter);
+            await _newsletterRepository.EditNewsletter(newsletter);
         }
 
-        public void DeleteNewsletter(int id)
+        public async Task DeleteNewsletter(int id)
         {
-            var newsletter = CheckNewsletterExists(id);
+            var newsletter = await CheckNewsletterExists(id);
 
-            _newsletterRepository.DeleteNewsletter(newsletter);
+            await _newsletterRepository.DeleteNewsletter(newsletter);
         }
 
-        private Newsletter CheckNewsletterExists(int id)
+        private async Task<Newsletter> CheckNewsletterExists(int id)
         {
-            var newsletter = _newsletterRepository.GetById(id);
+            var newsletter = await _newsletterRepository.GetById(id);
 
             if (newsletter == null)
             {

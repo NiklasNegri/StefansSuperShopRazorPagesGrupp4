@@ -2,17 +2,18 @@
 using StefansSuperShop.Data.Entities;
 using System.Collections.Generic;
 using StefansSuperShop.Data.Helpers;
+using System.Threading.Tasks;
 
 namespace StefansSuperShop.Repositories
 {
     public interface INewsletterRepository
     {
-        public void CreateNewsletter(Newsletter newsletter);
-        public void CreateSentNewsletter(Newsletter newsletter, List<NewsletterSent> newslettersSent);
-        public Newsletter GetById(int id);
-        public IEnumerable<Newsletter> GetAll();
-        public void EditNewsletter(Newsletter newsletter);
-        public void DeleteNewsletter(Newsletter newsletter);
+        public Task CreateNewsletter(Newsletter newsletter);
+        public Task CreateSentNewsletter(Newsletter newsletter, List<NewsletterSent> newslettersSent);
+        public Task<Newsletter> GetById(int id);
+        public Task<IEnumerable<Newsletter>> GetAll();
+        public Task EditNewsletter(Newsletter newsletter);
+        public Task DeleteNewsletter(Newsletter newsletter);
     }
 
     public class NewsletterRepository : INewsletterRepository
@@ -24,42 +25,42 @@ namespace StefansSuperShop.Repositories
             _context = context;
         }
 
-        public void CreateNewsletter(Newsletter newsletter)
+        public async Task CreateNewsletter(Newsletter newsletter)
         {
-            _context.Newsletters.Add(newsletter);
-            _context.SaveChanges();
+            await _context.Newsletters.AddAsync(newsletter);
+            await _context.SaveChangesAsync();
         }
 
-        public void CreateSentNewsletter(Newsletter newsletter, List<NewsletterSent> newslettersSent)
+        public async Task CreateSentNewsletter(Newsletter newsletter, List<NewsletterSent> newslettersSent)
         {
             foreach (var newsletterSent in newslettersSent)
             {
-                _context.NewslettersSent.Add(newsletterSent);
+                await _context.NewslettersSent.AddAsync(newsletterSent);
             }
-            EditNewsletter(newsletter);
-            _context.SaveChanges();
+            await EditNewsletter(newsletter);
+            await _context.SaveChangesAsync();
         }
 
-        public Newsletter GetById(int id)
+        public async Task<Newsletter> GetById(int id)
         {
-            return _context.Newsletters.Find(id);
+            return await _context.Newsletters.FindAsync(id);
         }
 
-        public IEnumerable<Newsletter> GetAll()
+        public async Task<IEnumerable<Newsletter>> GetAll()
         {
-            return _context.Newsletters;
+            return await _context.Newsletters.ToListAsync();
         }
 
-        public void EditNewsletter(Newsletter newsletter)
+        public async Task EditNewsletter(Newsletter newsletter)
         {
             _context.Newsletters.Update(newsletter);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteNewsletter(Newsletter newsletter)
+        public async Task DeleteNewsletter(Newsletter newsletter)
         {
             _context.Newsletters.Remove(newsletter);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

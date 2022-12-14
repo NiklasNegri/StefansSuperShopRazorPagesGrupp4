@@ -20,18 +20,19 @@ namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            _userService.GetById(id);
+            await _userService.GetById(id);
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string id)
         {
+            var user = await _userService.GetById(id);
             Model.Id = id;
             if (Model.NewEmail != null || Model.NewEmail != null)
             {
                 await _userService.UpdateUser(Model);
             }
-            else if (_userService.GetById(id).NewsletterActive != Model.NewsletterActive)
+            else if (user.NewsletterActive != Model.NewsletterActive)
             {
                 await _userService.UpdateNewsletterActive(Model);
             }
