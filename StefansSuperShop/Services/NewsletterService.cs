@@ -67,8 +67,8 @@ namespace StefansSuperShop.Services
         {
             var newsletter = await CheckNewsletterExists(id);
 
-            if (title != null) newsletter.Title = title;
-            if (content != null) newsletter.Content = content;
+            newsletter.Title = title ?? newsletter.Title;
+            newsletter.Content = content ?? newsletter.Content;
 
             await _newsletterRepository.EditNewsletter(newsletter);
         }
