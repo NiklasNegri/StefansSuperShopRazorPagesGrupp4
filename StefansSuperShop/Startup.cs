@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using StefansSuperShop.Configuration;
 using StefansSuperShop.Data;
+using StefansSuperShop.Services;
 
 namespace StefansSuperShop;
 
@@ -22,6 +24,11 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+		services.AddSwaggerGen(c =>
+		{
+			c.SwaggerDoc("v1", new OpenApiInfo { Title = "Stefans Supershop API", Version = "v1" });
+		});
+		services.AddControllers();
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
@@ -29,6 +36,7 @@ public class Startup
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
         services.AddTransient<DataInitializer>();
+        services.AddTransient<MailService>();
         services.AddRazorPages();
 		services.Configure<MailSettings>(Configuration.GetSection(nameof(MailSettings)));
     }
@@ -39,6 +47,11 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
+			app.UseSwagger();
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Stefans Supershop API V1");
+			});
         }
         else
         {
