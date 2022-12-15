@@ -1,0 +1,56 @@
+﻿@page
+@model StefansSuperShop.Pages.BackendTests.ApplicationUsers.IndexModel
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h2>Users</h2>
+
+<p>
+    <a asp-page="Create">Register user</a>
+</p>
+<p>
+    <a asp-page="RegisterNewsletter">Register newsletter user</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUsers[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUsers[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUsers[0].PasswordHash)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUsers[0].NewsletterIsActive)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ApplicationUsers) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PasswordHash);
+            </td>
+            <td>
+                @Html.DisplayTextFor(modelItem => item.NewsletterIsActive);
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

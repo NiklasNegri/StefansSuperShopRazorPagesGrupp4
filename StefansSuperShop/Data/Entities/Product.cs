@@ -18,6 +18,7 @@ namespace StefansSuperShop.Data.Entities
         [Required]
         [StringLength(40)]
         public string ProductName { get; set; }
+        public string ProductDescription { get; set; }
         [Column("SupplierID")]
         public int? SupplierId { get; set; }
         [Column("CategoryID")]

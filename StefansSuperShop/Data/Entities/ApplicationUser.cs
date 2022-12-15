@@ -4,6 +4,6 @@ namespace StefansSuperShop.Data.Entities
 {
     public class ApplicationUser : IdentityUser
     {
-        public bool NewsletterActive { get; set; }
+        public bool NewsletterIsActive { get; set; }
     }
 }

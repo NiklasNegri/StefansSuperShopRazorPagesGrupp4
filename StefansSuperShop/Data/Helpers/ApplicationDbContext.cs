@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using StefansSuperShop.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace StefansSuperShop.Data
+namespace StefansSuperShop.Data.Helpers
 {
     public class ApplicationDbContext : IdentityDbContext
     {

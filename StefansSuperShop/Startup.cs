@@ -5,7 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using StefansSuperShop.Data;
+using StefansSuperShop.Data.Entities;
+using StefansSuperShop.Data.Helpers;
+using StefansSuperShop.Repositories;
+using StefansSuperShop.Services;
+using System;
 
 namespace StefansSuperShop;
 
@@ -24,9 +28,15 @@ public class Startup
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
-        services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddRoles<IdentityRole>()
+        services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<ApplicationDbContext>();
+
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<INewsletterService, NewsletterService>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<INewsletterRepository, NewsletterRepository>();
         services.AddTransient<DataInitializer>();
         services.AddRazorPages();
     }
