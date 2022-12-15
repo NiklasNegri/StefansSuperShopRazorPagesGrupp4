@@ -47,12 +47,14 @@ namespace StefansSuperShop.Services
             var recipients = await _userRepository.GetAll();
             var newslettersSent = new List<NewsletterSent>();
 
-            var newsletterSent = recipients.Select(
-                recipient => new NewsletterSent()
+            foreach (var recipient in recipients)
+            {
+                newslettersSent.Add(new NewsletterSent
                 {
                     NewsletterId = newsletter.NewsletterId,
-                    ApplicationUserId = Int32.Parse(recipient.Id)
+                    ApplicationUserId = recipient.Id
                 });
+            }
 
             newsletter.SendDate = DateTime.Now;
 

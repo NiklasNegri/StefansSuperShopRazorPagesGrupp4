@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StefansSuperShop.Data.Entities
@@ -8,8 +6,9 @@ namespace StefansSuperShop.Data.Entities
     public class NewsletterSent
     {
         [Key]
-        [Column("NewsletterID")]
+        [Column("NewsletterSentID")]
+        public int NewsletterSentId { get; set; }
         public int NewsletterId { get; set; }
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
     }
 }

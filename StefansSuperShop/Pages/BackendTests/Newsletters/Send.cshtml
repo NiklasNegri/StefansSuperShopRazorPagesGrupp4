@@ -1,4 +1,10 @@
 ﻿@page
 @model StefansSuperShop.Pages.BackendTests.Newsletters.SendModel
+
+<form method="post">
+    <input type="hidden" asp-for="Newsletter.NewsletterId" />
+    <input type="submit" value="Send" class="btn btn-default" /> |
+</form>
+
 @{
 }

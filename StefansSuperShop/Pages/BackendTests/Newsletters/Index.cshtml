@@ -39,11 +39,8 @@
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.NewsletterId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.NewsletterId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.NewsletterId">Delete</a>
-                    <form method="post">
-                        <input type="hidden" asp-for="@item.NewsletterId" />
-                        <input type="submit" value="Send" class="btn btn-default" /> |
-                    </form>
+                <a asp-page="./Delete" asp-route-id="@item.NewsletterId">Delete</a> |
+                <a asp-page="./Send" asp-route-id="@item.NewsletterId">Send</a>
             </td>
         </tr>
 }
