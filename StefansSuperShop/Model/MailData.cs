@@ -5,9 +5,9 @@ namespace StefansSuperShop.Model;
 public class MailData
 {
 	// Receiver
-	public List<string> To { get; } = new List<string>();
-	public List<string> Cc { get; } = new List<string>();
-	public List<string> Bcc { get; } = new List<string>();
+	public List<string> To { get; }
+	public List<string> Cc { get; }
+	public List<string> Bcc { get; }
 
 	// Sender
 	public string From { get; }
