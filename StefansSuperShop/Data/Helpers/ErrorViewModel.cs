@@ -1,6 +1,4 @@
-using System;
-
-namespace StefansSuperShop.Data
+namespace StefansSuperShop.Data.Helpers
 {
     public class ErrorViewModel
     {

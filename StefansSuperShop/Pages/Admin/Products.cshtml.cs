@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using StefansSuperShop.Data;
+using StefansSuperShop.Data.Helpers;
 
 namespace StefansSuperShop.Pages.Admin
 {
