@@ -109,7 +109,7 @@ namespace StefansSuperShop.Data.Helpers
             await _dbContext.SaveChangesAsync();
         }
 
-        private async Task AddProduct(string category, string name, int pris, int stocklevel)
+        private async Task AddProduct(string category, string name, int pris, int stocklevel, string description)
         {
             if (_dbContext.Products.Any(e => e.ProductName == name)) return;
             await _dbContext.Products.AddAsync(new Product
@@ -119,6 +119,7 @@ namespace StefansSuperShop.Data.Helpers
                 UnitsInStock = Convert.ToInt16(stocklevel),
                 UnitPrice = pris,
                 Discontinued = false,
+                ProductDescription = description
             });
         }
 

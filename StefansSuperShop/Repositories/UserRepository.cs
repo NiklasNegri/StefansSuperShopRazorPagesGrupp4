@@ -46,7 +46,7 @@ namespace StefansSuperShop.Repositories
 
             if (model.NewPassword == null)
             {
-                user.NewsletterActive = true;
+                user.NewsletterIsActive = true;
                 await _userManager.CreateAsync(user);
                 return;
             }
@@ -90,7 +90,7 @@ namespace StefansSuperShop.Repositories
         public async Task UpdateNewsletterActive(ApplicationUserDTO model)
         {
             var user = await GetById(model.Id);
-            user.NewsletterActive = model.NewsletterActive;
+            user.NewsletterIsActive = model.NewsletterActive;
             await _userManager.UpdateAsync(user);
         }
 

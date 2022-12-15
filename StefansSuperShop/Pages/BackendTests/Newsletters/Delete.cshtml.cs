@@ -20,13 +20,13 @@ namespace StefansSuperShop.Pages.BackendTests.Newsletters
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            _newsletterService.GetById(id);
+            await _newsletterService.GetById(id);
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            _newsletterService.DeleteNewsletter(id);
+            await _newsletterService.DeleteNewsletter(id);
 
             return RedirectToPage("./Index");
         }
