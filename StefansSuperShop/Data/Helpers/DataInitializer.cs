@@ -109,7 +109,7 @@ namespace StefansSuperShop.Data.Helpers
             await _dbContext.SaveChangesAsync();
         }
 
-        private async Task AddProduct(string category, string name, int pris, int stocklevel, string description)
+        private async Task AddProduct(string category, string name, int pris, int stocklevel)
         {
             if (_dbContext.Products.Any(e => e.ProductName == name)) return;
             await _dbContext.Products.AddAsync(new Product
