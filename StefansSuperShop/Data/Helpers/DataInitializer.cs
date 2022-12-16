@@ -21,12 +21,11 @@ namespace StefansSuperShop.Data.Helpers
         }
         public async Task SeedData()
         {
+            _dbContext.Database.Migrate();
             await SeedRoles();
             await SeedUsers();
             await SeedCategories();
             await SeedProducts();
-
-            _dbContext.Database.Migrate();
         }
 
         private async Task SeedProducts()
