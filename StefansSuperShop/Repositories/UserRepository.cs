@@ -42,7 +42,9 @@ namespace StefansSuperShop.Repositories
         {
             var user = _mapper.Map<ApplicationUser>(model);
             user.Id = Guid.NewGuid().ToString();
+            user.UserName = model.NewEmail;
             user.Email = model.NewEmail;
+            user.EmailConfirmed = true;
 
             if (model.NewPassword == null)
             {

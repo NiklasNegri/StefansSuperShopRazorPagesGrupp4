@@ -14,7 +14,7 @@ public class Program
         {
             var serviceProvider = scope.ServiceProvider;
             var dataInitializer = serviceProvider.GetRequiredService<DataInitializer>();
-            dataInitializer.SeedData();
+            dataInitializer.SeedData().GetAwaiter().GetResult();
         }
 
         host.Run();
