@@ -207,11 +207,8 @@ namespace StefansSuperShop.Data.Helpers
 
         private async Task SeedUsers()
         {
-            if (!_dbContext.ApplicationUsers.Any(u => u.Email == "admin@admin.se" || u.Id == "customer@customer.se"))
-            {
-                await _userService.RegisterUser(new DTOs.ApplicationUserDTO { CurrentEmail = "admin@admin.se", NewPassword = "Admin123#", Role = "Admin" });
-                await _userService.RegisterUser(new DTOs.ApplicationUserDTO { CurrentEmail = "customer@customer.se", NewPassword = "Customer123#", Role = "Customer" });
-            }
+            await _userService.RegisterUser(new DTOs.ApplicationUserDTO { NewEmail = "admin@admin.se", NewPassword = "Admin123#", Role = "Admin" });
+            await _userService.RegisterUser(new DTOs.ApplicationUserDTO { NewEmail = "customer@customer.se", NewPassword = "Customer123#", Role = "Customer" });
         }
     }
 }
