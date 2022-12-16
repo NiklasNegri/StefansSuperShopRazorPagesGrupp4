@@ -5,11 +5,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Newsletter control</h2>
 
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+<h2>Unsent letters</h2>
 <table class="table">
     <thead>
         <tr>
@@ -44,5 +45,65 @@
             </td>
         </tr>
 }
+    </tbody>
+</table>
+
+<h2>Sent letters</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.JoinedList[0].NewsletterId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JoinedList[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JoinedList[0].Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JoinedList[0].SendDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JoinedList[0].NewsletterSentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JoinedList[0].RecipientId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JoinedList[0].RecipientEmail)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.JoinedList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewsletterId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content);
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SendDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewsletterSentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecipientId);
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecipientEmail);
+                </td>
+                <td>
+                    <a asp-page="./Recipients" asp-route-id="@item.NewsletterId">Recipients</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

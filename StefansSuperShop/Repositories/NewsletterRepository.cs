@@ -11,7 +11,9 @@ namespace StefansSuperShop.Repositories
         public Task CreateNewsletter(Newsletter newsletter);
         public Task CreateSentNewsletter(Newsletter newsletter, List<NewsletterSent> newslettersSent);
         public Task<Newsletter> GetById(int id);
+        public Task<NewsletterSent> GetByIdSent(int id);
         public Task<IEnumerable<Newsletter>> GetAll();
+        public Task<IEnumerable<NewsletterSent>> GetAllSent();
         public Task EditNewsletter(Newsletter newsletter);
         public Task DeleteNewsletter(Newsletter newsletter);
     }
@@ -46,9 +48,19 @@ namespace StefansSuperShop.Repositories
             return await _context.Newsletters.FindAsync(id);
         }
 
+        public async Task<NewsletterSent> GetByIdSent(int id)
+        {
+            return await _context.NewslettersSent.FindAsync(id);
+        }
+
         public async Task<IEnumerable<Newsletter>> GetAll()
         {
             return await _context.Newsletters.ToListAsync();
+        }
+
+        public async Task <IEnumerable<NewsletterSent>> GetAllSent()
+        {
+            return await _context.NewslettersSent.ToListAsync();
         }
 
         public async Task EditNewsletter(Newsletter newsletter)
