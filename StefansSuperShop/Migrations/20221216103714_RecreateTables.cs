@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StefansSuperShop.Migrations
 {
-    public partial class CreateTable : Migration
+    public partial class RecreateTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -142,7 +142,8 @@ namespace StefansSuperShop.Migrations
                     NewsletterSentID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NewsletterId = table.Column<int>(type: "int", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApplicationUserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
