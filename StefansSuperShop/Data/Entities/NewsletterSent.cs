@@ -10,5 +10,6 @@ namespace StefansSuperShop.Data.Entities
         public int NewsletterSentId { get; set; }
         public int NewsletterId { get; set; }
         public string ApplicationUserId { get; set; }
+        public string ApplicationUserEmail { get; set; }
     }
 }

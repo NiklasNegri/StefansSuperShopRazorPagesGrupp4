@@ -1,0 +1,29 @@
+﻿@page
+@model StefansSuperShop.Pages.BackendTests.Newsletters.RecipientsModel
+
+<h2>Recipients</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Recipients[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recipients[0].Email)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Recipients)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
