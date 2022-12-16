@@ -23,7 +23,6 @@ namespace StefansSuperShop.Pages.BackendTests.Newsletters
         }
 
         public IList<Newsletter> Newsletters { get;set; }
-        public IList<NewsletterSent> NewslettersSent { get; set; }
         public IList<NewsletterJoin> JoinedList { get; set; }
 
         public async Task OnGetAsync()
@@ -33,7 +32,6 @@ namespace StefansSuperShop.Pages.BackendTests.Newsletters
             Newsletters = onlyUnsent.ToList();
 
             var newslettersSent = await _newsletterService.GetAllSent();
-            //NewslettersSent = newslettersSent.ToList();
 
             var results = newsletters.Join(newslettersSent,
                         sent => sent.NewsletterId,
@@ -60,20 +58,6 @@ namespace StefansSuperShop.Pages.BackendTests.Newsletters
                          }).ToList();
 
             JoinedList = results;
-
-
-            //var innerJoin = newsletters.Join(
-            //    newslettersSent,
-            //    sent => sent.Title,
-            //    sent => sent.ApplicationUserId,
-            //    (sent, unsent) => new
-            //    {
-            //        sentTitle = sent.Title,
-            //        sentContent = sent.Content,
-            //        unsentUser = unsent.ApplicationUserId
-            //    }).ToList();
-
-            //JoinedList = results;
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
