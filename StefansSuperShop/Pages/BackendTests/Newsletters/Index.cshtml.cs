@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Services;
 using StefansSuperShop.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Numerics;
 using System.Threading.Tasks;
 
 namespace StefansSuperShop.Pages.BackendTests.Newsletters

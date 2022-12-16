@@ -1,5 +1,4 @@
-﻿using StefansSuperShop.Data.Entities;
-using System;
+﻿using System;
 
 namespace StefansSuperShop.ViewModels
 {
