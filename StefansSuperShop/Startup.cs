@@ -12,7 +12,6 @@ using StefansSuperShop.Data.Helpers;
 using StefansSuperShop.Repositories;
 using StefansSuperShop.Services;
 using System;
-using StefansSuperShop.Services;
 
 namespace StefansSuperShop;
 

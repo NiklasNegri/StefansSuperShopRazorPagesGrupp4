@@ -30,7 +30,7 @@ namespace StefansSuperShop.Pages.BackendTests.Newsletters
                 return Page();
             }
 
-            _newsletterService.CreateNewsletter(Newsletter.Title, Newsletter.Content);
+            await _newsletterService.CreateNewsletter(Newsletter.Title, Newsletter.Content);
 
             return RedirectToPage("./Index");
         }
