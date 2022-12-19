@@ -60,7 +60,6 @@ namespace StefansSuperShop.Data.Helpers
             await AddProduct("Produce", "Rössle Sauerkraut", 46, 26, "Fantastic");
             await AddProduct("Meat/Poultry", "Thüringer Rostbratwurst", 124, 0, "Fantastic");
             await AddProduct("Seafood", "Nord-Ost Matjeshering", 26, 10, "Fantastic");
-            await AddProduct("Dairy Products", "Gorgonzola Telino", 13, 0, "Fantastic");
             await AddProduct("Dairy Products", "Mascarpone Fabioli", 32, 9, "Fantastic");
             await AddProduct("Dairy Products", "Geitost", 3, 112, "Fantastic");
             await AddProduct("Beverages", "Sasquatch Ale", 14, 111, "Fantastic");
@@ -120,26 +119,27 @@ namespace StefansSuperShop.Data.Helpers
                 UnitsInStock = Convert.ToInt16(stocklevel),
                 UnitPrice = pris,
                 Discontinued = false,
+                ProductDescription = description
             });
         }
 
         private async Task SeedCategories()
         {
-            AddCategoryIfNotExists("Beverages", "Soft drinks, coffees, teas, beers, and ales");
-            AddCategoryIfNotExists("Condiments", "Sweet and savory sauces, relishes, spreads, and seasonings");
-            AddCategoryIfNotExists("Confections", "Desserts, candies, and sweet breads");
-            AddCategoryIfNotExists("Dairy Products", "Cheeses");
-            AddCategoryIfNotExists("Grains/Cereals", "Breads, crackers, pasta, and cereal");
-            AddCategoryIfNotExists("Meat/Poultry", "Prepared meats");
-            AddCategoryIfNotExists("Produce", "Dried fruit and bean curd");
-            AddCategoryIfNotExists("Seafood", "Seaweed and fish");
+            await AddCategoryIfNotExists("Beverages", "Soft drinks, coffees, teas, beers, and ales");
+            await AddCategoryIfNotExists("Condiments", "Sweet and savory sauces, relishes, spreads, and seasonings");
+            await AddCategoryIfNotExists("Confections", "Desserts, candies, and sweet breads");
+            await AddCategoryIfNotExists("Dairy Products", "Cheeses");
+            await AddCategoryIfNotExists("Grains/Cereals", "Breads, crackers, pasta, and cereal");
+            await AddCategoryIfNotExists("Meat/Poultry", "Prepared meats");
+            await AddCategoryIfNotExists("Produce", "Dried fruit and bean curd");
+            await AddCategoryIfNotExists("Seafood", "Seaweed and fish");
             await _dbContext.SaveChangesAsync();
         }
 
-        private void AddCategoryIfNotExists(string name, string description)
+        private async Task AddCategoryIfNotExists(string name, string description)
         {
             if (_dbContext.Categories.Any(e => e.CategoryName == name)) return;
-            _dbContext.Categories.Add(new Category
+            await _dbContext.Categories.AddAsync(new Category
             {
                 CategoryName = name,
                 Description = description,
@@ -195,23 +195,21 @@ namespace StefansSuperShop.Data.Helpers
             var role = _dbContext.Roles.FirstOrDefault(r => r.Name == "Admin");
             if (role == null)
             {
-                _dbContext.Roles.Add(new IdentityRole { Name = "Admin", NormalizedName = "Admin" });
+                await _dbContext.Roles.AddAsync(new IdentityRole { Name = "Admin", NormalizedName = "Admin" });
             }
             role = _dbContext.Roles.FirstOrDefault(r => r.Name == "Customer");
             if (role == null)
             {
-                _dbContext.Roles.Add(new IdentityRole { Name = "Customer", NormalizedName = "Customer" });
+                await _dbContext.Roles.AddAsync(new IdentityRole { Name = "Customer", NormalizedName = "Customer" });
             }
             await _dbContext.SaveChangesAsync();
         }
 
         private async Task SeedUsers()
         {
-            if (!_dbContext.ApplicationUsers.Any(u => u.Email == "admin@admin.se" || u.Id == "customer@customer.se"))
-            {
-                await _userService.RegisterUser(new DTOs.ApplicationUserDTO { CurrentEmail = "admin@admin.se", NewPassword = "Admin123#", Role = "Admin" });
-                await _userService.RegisterUser(new DTOs.ApplicationUserDTO { CurrentEmail = "customer@customer.se", NewPassword = "Customer123#", Role = "Customer" });
-            }
+            if (_dbContext.ApplicationUsers.Any(u => u.Email == "admin@admin.se" || u.Email == "customer@customer.se")) return;
+            await _userService.RegisterUser(new DTOs.ApplicationUserDTO { NewEmail = "admin@admin.se", NewPassword = "Admin123#", Role = "Admin" });
+            await _userService.RegisterUser(new DTOs.ApplicationUserDTO { NewEmail = "customer@customer.se", NewPassword = "Customer123#", Role = "Customer" });
         }
     }
 }

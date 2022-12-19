@@ -1,26 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using StefansSuperShop.Data.Entities;
-using StefansSuperShop.Data.Helpers;
+using StefansSuperShop.Services;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
 {
     public class IndexModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUserService _userService;
 
-        public IndexModel(ApplicationDbContext context)
+        public IndexModel(IUserService userService)
         {
-            _context = context;
+            _userService = userService;
         }
 
         public IList<ApplicationUser> ApplicationUsers { get; set; }
 
         public async Task OnGetAsync()
         {
-            ApplicationUsers = await _context.ApplicationUsers.ToListAsync();
+            var users = await _userService.GetAll();
+            ApplicationUsers = users.ToList();
         }
     }
 }

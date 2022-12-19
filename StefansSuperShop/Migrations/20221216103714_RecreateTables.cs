@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StefansSuperShop.Migrations
 {
-    public partial class CreateTables : Migration
+    public partial class RecreateTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,7 @@ namespace StefansSuperShop.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NewsletterActive = table.Column<bool>(type: "bit", nullable: true),
+                    NewsletterIsActive = table.Column<bool>(type: "bit", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -128,7 +128,7 @@ namespace StefansSuperShop.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HasBeenSent = table.Column<bool>(type: "bit", nullable: false)
+                    SendDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,18 +139,19 @@ namespace StefansSuperShop.Migrations
                 name: "NewslettersSent",
                 columns: table => new
                 {
-                    NewsletterID = table.Column<int>(type: "int", nullable: false)
+                    NewsletterSentID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AspNetUserId = table.Column<int>(type: "int", nullable: false),
-                    SendDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    NewsletterId = table.Column<int>(type: "int", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApplicationUserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NewslettersSent", x => x.NewsletterID);
+                    table.PrimaryKey("PK_NewslettersSent", x => x.NewsletterSentID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Region",
+                name: "Regions",
                 columns: table => new
                 {
                     RegionID = table.Column<int>(type: "int", nullable: false)
@@ -159,7 +160,7 @@ namespace StefansSuperShop.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Region", x => x.RegionID);
+                    table.PrimaryKey("PK_Regions", x => x.RegionID);
                 });
 
             migrationBuilder.CreateTable(
@@ -245,8 +246,8 @@ namespace StefansSuperShop.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -290,8 +291,8 @@ namespace StefansSuperShop.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -317,9 +318,9 @@ namespace StefansSuperShop.Migrations
                 {
                     table.PrimaryKey("PK_Territory", x => x.TerritoryID);
                     table.ForeignKey(
-                        name: "FK_Territory_Region_RegionID",
+                        name: "FK_Territory_Regions_RegionID",
                         column: x => x.RegionID,
-                        principalTable: "Region",
+                        principalTable: "Regions",
                         principalColumn: "RegionID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -371,6 +372,7 @@ namespace StefansSuperShop.Migrations
                     ProductID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    ProductDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SupplierID = table.Column<int>(type: "int", nullable: true),
                     CategoryID = table.Column<int>(type: "int", nullable: true),
                     QuantityPerUnit = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
@@ -544,7 +546,7 @@ namespace StefansSuperShop.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Region");
+                name: "Regions");
 
             migrationBuilder.DropTable(
                 name: "Customers");

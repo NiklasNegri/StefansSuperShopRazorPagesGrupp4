@@ -6,8 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StefansSuperShop.Data.Entities;
-using Microsoft.OpenApi.Models;
-using StefansSuperShop.Configuration;
 using StefansSuperShop.Data.Helpers;
 using StefansSuperShop.Repositories;
 using StefansSuperShop.Services;
@@ -40,7 +38,6 @@ public class Startup
 
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-        services.AddScoped<IMailService, MailService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<INewsletterService, NewsletterService>();
         services.AddScoped<IUserRepository, UserRepository>();

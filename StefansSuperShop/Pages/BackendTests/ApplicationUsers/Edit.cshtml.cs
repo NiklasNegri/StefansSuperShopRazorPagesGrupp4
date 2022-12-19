@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using StefansSuperShop.Data.DTOs;
 using StefansSuperShop.Services;
+using System.Threading.Tasks;
 
 namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
 {
@@ -32,7 +32,7 @@ namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
             {
                 await _userService.UpdateUser(Model);
             }
-            else if (user.NewsletterActive != Model.NewsletterActive)
+            else if (user.NewsletterIsActive != Model.NewsletterActive)
             {
                 await _userService.UpdateNewsletterActive(Model);
             }

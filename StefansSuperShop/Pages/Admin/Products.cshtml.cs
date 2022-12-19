@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using StefansSuperShop.Data.Helpers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace StefansSuperShop.Pages.Admin
 {

@@ -26,7 +26,7 @@
                 @Html.DisplayNameFor(model => model.ApplicationUsers[0].PasswordHash)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUsers[0].NewsletterActive)
+                @Html.DisplayNameFor(model => model.ApplicationUsers[0].NewsletterIsActive)
             </th>
         </tr>
     </thead>
@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.PasswordHash);
             </td>
             <td>
-                @Html.DisplayTextFor(modelItem => item.NewsletterActive);
+                @Html.DisplayTextFor(modelItem => item.NewsletterIsActive);
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

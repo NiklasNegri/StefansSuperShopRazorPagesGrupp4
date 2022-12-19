@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Data.DTOs;
+using StefansSuperShop.Data.Entities;
 
 namespace StefansSuperShop.Data.Helpers
 {

@@ -12,8 +12,8 @@ using StefansSuperShop.Data.Helpers;
 namespace StefansSuperShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221213092041_UpdateTables")]
-    partial class UpdateTables
+    [Migration("20221216103714_RecreateTables")]
+    partial class RecreateTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -175,12 +175,10 @@ namespace StefansSuperShop.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -217,12 +215,10 @@ namespace StefansSuperShop.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -416,17 +412,23 @@ namespace StefansSuperShop.Migrations
 
             modelBuilder.Entity("StefansSuperShop.Data.Entities.NewsletterSent", b =>
                 {
-                    b.Property<int>("NewsletterId")
+                    b.Property<int>("NewsletterSentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("NewsletterID");
+                        .HasColumnName("NewsletterSentID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NewsletterId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NewsletterSentId"), 1L, 1);
 
-                    b.Property<int>("ApplicationUserId")
+                    b.Property<string>("ApplicationUserEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NewsletterId")
                         .HasColumnType("int");
 
-                    b.HasKey("NewsletterId");
+                    b.HasKey("NewsletterSentId");
 
                     b.ToTable("NewslettersSent");
                 });
@@ -540,6 +542,9 @@ namespace StefansSuperShop.Migrations
 
                     b.Property<bool>("Discontinued")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ProductDescription")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
@@ -702,7 +707,7 @@ namespace StefansSuperShop.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<bool>("NewsletterActive")
+                    b.Property<bool>("NewsletterIsActive")
                         .HasColumnType("bit");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");

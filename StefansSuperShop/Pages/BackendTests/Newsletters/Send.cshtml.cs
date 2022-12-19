@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Services;
@@ -6,31 +6,27 @@ using System.Threading.Tasks;
 
 namespace StefansSuperShop.Pages.BackendTests.Newsletters
 {
-    public class CreateModel : PageModel
+    public class SendModel : PageModel
     {
         private readonly INewsletterService _newsletterService;
 
-        public CreateModel(INewsletterService newsletterService)
+        public SendModel(INewsletterService newsletterService)
         {
             _newsletterService = newsletterService;
-        }
-
-        public IActionResult OnGet()
-        {
-            return Page();
         }
 
         [BindProperty]
         public Newsletter Newsletter { get; set; }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            await _newsletterService.GetById(id);
+            return Page();
+        }
 
-            await _newsletterService.CreateNewsletter(Newsletter.Title, Newsletter.Content);
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            await _newsletterService.CreateSentNewsletter(id);
 
             return RedirectToPage("./Index");
         }
