@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ public class MailService : IMailService
         _settings = settings.Value;
     }
     
-    public async Task<bool> SendAsync(MailData mailData, CancellationToken ct)
+    public async Task SendAsync(MailData mailData, CancellationToken ct)
     {
         try
         {
@@ -73,12 +74,10 @@ public class MailService : IMailService
             
             #endregion
 
-            return true;
-
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return false;
+            Debug.WriteLine(ex.Message);
         }
     }
 

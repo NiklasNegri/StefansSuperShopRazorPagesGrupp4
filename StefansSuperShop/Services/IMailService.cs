@@ -6,5 +6,5 @@ namespace StefansSuperShop.Services;
 
 public interface IMailService
 {
-    Task<bool> SendAsync(MailData mailData, CancellationToken ct);
+    public Task SendAsync(MailData mailData, CancellationToken ct);
 }
