@@ -9,9 +9,14 @@ using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using StefansSuperShop.Configuration;
-using StefansSuperShop.Model;
+using StefansSuperShop.Data.Model;
 
 namespace StefansSuperShop.Services;
+
+public interface IMailService
+{
+    public Task SendAsync(MailData mailData, CancellationToken ct);
+}
 
 // Based on this article https://blog.christian-schou.dk/send-emails-with-asp-net-core-with-mailkit/
 // Testaccount creata an account at https://ethereal.email/create and use that address as the recipient
