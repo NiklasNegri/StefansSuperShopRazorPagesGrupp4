@@ -40,6 +40,7 @@ public class Startup
 
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+        services.AddScoped<IMailService, MailService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<INewsletterService, NewsletterService>();
         services.AddScoped<IUserRepository, UserRepository>();

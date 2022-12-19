@@ -13,6 +13,8 @@ using StefansSuperShop.Model;
 
 namespace StefansSuperShop.Services;
 
+// Based on this article https://blog.christian-schou.dk/send-emails-with-asp-net-core-with-mailkit/
+// Testaccount creata an account at https://ethereal.email/create and use that address as the recipient
 public class MailService : IMailService
 {
     private MailSettings _settings;
