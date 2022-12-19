@@ -109,7 +109,7 @@ namespace StefansSuperShop.Data.Helpers
             await _dbContext.SaveChangesAsync();
         }
 
-        private async Task AddProduct(string category, string name, int pris, int stocklevel, string description)
+        private async Task AddProduct(string category, string name, int price, int stocklevel, string description)
         {
             if (_dbContext.Products.Any(e => e.ProductName == name)) return;
             await _dbContext.Products.AddAsync(new Product
@@ -117,7 +117,7 @@ namespace StefansSuperShop.Data.Helpers
                 ProductName = name,
                 Category = _dbContext.Categories.First(c => c.CategoryName == category),
                 UnitsInStock = Convert.ToInt16(stocklevel),
-                UnitPrice = pris,
+                UnitPrice = price,
                 Discontinued = false,
                 ProductDescription = description
             });
@@ -210,6 +210,7 @@ namespace StefansSuperShop.Data.Helpers
             if (_dbContext.ApplicationUsers.Any(u => u.Email == "admin@admin.se" || u.Email == "customer@customer.se")) return;
             await _userService.RegisterUser(new DTOs.ApplicationUserDTO { NewEmail = "admin@admin.se", NewPassword = "Admin123#", Role = "Admin" });
             await _userService.RegisterUser(new DTOs.ApplicationUserDTO { NewEmail = "customer@customer.se", NewPassword = "Customer123#", Role = "Customer" });
+            await _userService.RegisterUser(new DTOs.ApplicationUserDTO { NewEmail = "active@newsletter.se", NewPassword = "Newsletter123#", Role = "Customer", NewsletterIsActive = true });
         }
     }
 }

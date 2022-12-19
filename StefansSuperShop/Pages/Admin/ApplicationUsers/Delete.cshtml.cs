@@ -4,7 +4,7 @@ using StefansSuperShop.Data.DTOs;
 using StefansSuperShop.Services;
 using System.Threading.Tasks;
 
-namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
+namespace StefansSuperShop.Pages.Admin.ApplicationUsers
 {
     public class DeleteModel : PageModel
     {

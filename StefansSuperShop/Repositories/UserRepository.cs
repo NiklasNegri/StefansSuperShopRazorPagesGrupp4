@@ -92,7 +92,7 @@ namespace StefansSuperShop.Repositories
         public async Task UpdateNewsletterActive(ApplicationUserDTO model)
         {
             var user = await GetById(model.Id);
-            user.NewsletterIsActive = model.NewsletterActive;
+            user.NewsletterIsActive = model.NewsletterIsActive;
             await _userManager.UpdateAsync(user);
         }
 

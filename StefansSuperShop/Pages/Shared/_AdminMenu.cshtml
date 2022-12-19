@@ -3,6 +3,6 @@
 <ul class="section-tab-nav tab-nav">
     @foreach (var item in Model)
     {
-        <li @(item.IsActive ?  "class=active" : "")><a asp-controller="@item.Controller" asp-action="@item.Action">@item.Text</a></li>
+        <li @(item.IsActive ?  true : "")><a asp-controller="@item.Controller" asp-action="@item.Action">@item.Text</a></li>
     }
 </ul>

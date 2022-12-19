@@ -4,13 +4,13 @@ using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Services;
 using System.Threading.Tasks;
 
-namespace StefansSuperShop.Pages.BackendTests.Newsletters
+namespace StefansSuperShop.Pages.Admin.Newsletters
 {
-    public class EditModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly INewsletterService _newsletterService;
 
-        public EditModel(INewsletterService newsletterService)
+        public DeleteModel(INewsletterService newsletterService)
         {
             _newsletterService = newsletterService;
         }
@@ -26,7 +26,7 @@ namespace StefansSuperShop.Pages.BackendTests.Newsletters
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            await _newsletterService.EditNewsletter(id, Newsletter.Title, Newsletter.Content);
+            await _newsletterService.DeleteNewsletter(id);
 
             return RedirectToPage("./Index");
         }

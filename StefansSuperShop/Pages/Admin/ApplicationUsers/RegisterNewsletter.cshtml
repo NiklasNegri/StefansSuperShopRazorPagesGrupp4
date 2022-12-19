@@ -1,5 +1,5 @@
 ﻿@page
-@model StefansSuperShop.Pages.BackendTests.ApplicationUsers.RegisterNewsletterModel
+@model StefansSuperShop.Pages.Admin.ApplicationUsers.RegisterNewsletterModel
 
 @{
     ViewData["Title"] = "Register newsletter only";
@@ -16,9 +16,9 @@
                 <input asp-for="Model.NewEmail" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Model.NewsletterActive" class="control-label"></label>
-                <input asp-for="Model.NewsletterActive" class="form-control" />
-                <span asp-validation-for="Model.NewsletterActive" class="text-danger"></span>
+                <label asp-for="Model.NewsletterIsActive" class="control-label"></label>
+                <input asp-for="Model.NewsletterIsActive" class="form-control" />
+                <span asp-validation-for="Model.NewsletterIsActive" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

@@ -37,6 +37,7 @@ public class Startup
         services.AddScoped<INewsletterService, NewsletterService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<INewsletterRepository, NewsletterRepository>();
+        services.AddScoped<ApplicationUser, ApplicationUser>();
         services.AddTransient<DataInitializer>();
         services.AddRazorPages();
     }

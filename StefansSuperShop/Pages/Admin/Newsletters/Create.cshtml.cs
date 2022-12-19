@@ -1,18 +1,18 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using StefansSuperShop.Data.DTOs;
+using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Services;
 using System.Threading.Tasks;
 
-namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
+namespace StefansSuperShop.Pages.Admin.Newsletters
 {
     public class CreateModel : PageModel
     {
-        private readonly IUserService _userService;
+        private readonly INewsletterService _newsletterService;
 
-        public CreateModel(IUserService userService)
+        public CreateModel(INewsletterService newsletterService)
         {
-            _userService = userService;
+            _newsletterService = newsletterService;
         }
 
         public IActionResult OnGet()
@@ -21,7 +21,7 @@ namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
         }
 
         [BindProperty]
-        public ApplicationUserDTO Model { get; set; }
+        public Newsletter Newsletter { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -30,9 +30,7 @@ namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
                 return Page();
             }
 
-            Model.UserName = Model.NewEmail;
-            Model.Role = Request.Form["role"];
-            await _userService.RegisterUser(Model);
+            await _newsletterService.CreateNewsletter(Newsletter.Title, Newsletter.Content);
 
             return RedirectToPage("./Index");
         }

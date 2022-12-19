@@ -3,7 +3,7 @@ using StefansSuperShop.Data.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StefansSuperShop.Pages.Admin
+namespace StefansSuperShop.Pages.Admin.Products
 {
     public class ProductsModel : PageModel
     {

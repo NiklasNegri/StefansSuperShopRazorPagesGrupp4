@@ -1,0 +1,120 @@
+﻿@page
+@model StefansSuperShop.Pages.Admin.Newsletters.IndexModel
+
+@{
+    ViewData["Title"] = "Newsletter control";
+}
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+    <h4>Manage</h4>
+
+    <hr />
+
+    <div>
+        <a class="btn btn-primary" asp-page="/Admin/Index">Back to List</a>
+        <a class="btn btn-primary" asp-page="/Admin/Newsletters/Create" role="button">Create New</a>
+    </div>
+
+    <hr />
+
+    <h2>Unsent letters</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Newsletters[0].Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Newsletters[0].Content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Newsletters[0].SendDate)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Newsletters)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SendDate);
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@item.NewsletterId">Edit</a>
+                        <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.NewsletterId">Details</a>
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.NewsletterId">Delete</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-success" asp-page="./Send" asp-route-id="@item.NewsletterId">Send</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>Sent letters</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.JoinedList[0].NewsletterId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.JoinedList[0].Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.JoinedList[0].Content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.JoinedList[0].SendDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.JoinedList[0].NewsletterSentId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.JoinedList[0].RecipientId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.JoinedList[0].RecipientEmail)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.JoinedList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NewsletterId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content);
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SendDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NewsletterSentId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RecipientId);
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RecipientEmail);
+                    </td>
+                    <td>
+                        <a asp-page="./Recipients" asp-route-id="@item.NewsletterId">Recipients</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
