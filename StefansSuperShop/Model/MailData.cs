@@ -19,21 +19,21 @@ public class MailData
 	public string Subject { get; }
 	public string Body { get; }
 
-	public MailData(List<string> to, string subject, string body = null, string from = null, string displayName = null, string replyTo = null, string replyToName = null, List<string> bcc = null, List<string> cc = null)
-	{
-		// Receiver
-		To = to ?? new List<string>();
-		Bcc = bcc ?? new List<string>();
-		Cc = cc ?? new List<string>();
+	//public MailData(List<string> to, string subject, string body = null, string from = null, string displayName = null, string replyTo = null, string replyToName = null, List<string> bcc = null, List<string> cc = null)
+	//{
+	//	// Receiver
+	//	To = to ?? new List<string>();
+	//	Bcc = bcc ?? new List<string>();
+	//	Cc = cc ?? new List<string>();
 
-		// Sender
-		From = from;
-		DisplayName = displayName;
-		ReplyTo = replyTo;
-		ReplyToName = replyToName;
+	//	// Sender
+	//	From = from;
+	//	DisplayName = displayName;
+	//	ReplyTo = replyTo;
+	//	ReplyToName = replyToName;
 
-		// Content
-		Subject = subject;
-		Body = body;
-	}
+	//	// Content
+	//	Subject = subject;
+	//	Body = body;
+	//}
 }
