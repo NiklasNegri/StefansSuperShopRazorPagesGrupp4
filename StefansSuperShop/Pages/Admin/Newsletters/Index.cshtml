@@ -74,19 +74,10 @@
                 <th>
                     @Html.DisplayNameFor(model => model.JoinedList[0].SendDate)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.JoinedList[0].NewsletterSentId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.JoinedList[0].RecipientId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.JoinedList[0].RecipientEmail)
-                </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.JoinedList)
+            @foreach (var item in Model.JoinedList.DistinctBy(x => x.NewsletterId))
             {
                 <tr>
                     <td>
@@ -96,22 +87,12 @@
                         @Html.DisplayFor(modelItem => item.Title)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Content);
+                        @Html.DisplayFor(modelItem => item.Content)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.SendDate)
-                    </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.NewsletterSentId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RecipientId);
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RecipientEmail);
-                    </td>
-                    <td>
-                        <a asp-page="./Recipients" asp-route-id="@item.NewsletterId">Recipients</a>
+                        <a class="btn btn-info" asp-page="./Recipients" asp-route-id="@item.NewsletterId">Details</a>
                     </td>
                 </tr>
             }
