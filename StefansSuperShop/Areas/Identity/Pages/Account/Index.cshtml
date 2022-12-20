@@ -2,16 +2,16 @@
 @model StefansSuperShop.Pages.Admin.ApplicationUsers.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "My Account";
 }
 
-<h2>My Account</h2>
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
 
-<h4>Manage</h4>
-<hr />
-<div class="row">
-    <h4>Change email</h4>
+    <h4>Manage</h4>
+    <hr />
     <div class="col-md-4">
+        <h4>Change email</h4>
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Model.Id" />
@@ -21,7 +21,7 @@
                 <span asp-validation-for="Model.NewEmail" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
@@ -41,7 +41,7 @@
                 <span asp-validation-for="Model.CurrentPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
@@ -52,7 +52,7 @@
                 <label asp-for="Model.NewsletterIsActive" class="control-label"></label>
                 <input asp-for="Model.NewsletterIsActive" class="form-control" />
                 <span asp-validation-for="Model.NewsletterIsActive" class="text-danger"></span>
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
