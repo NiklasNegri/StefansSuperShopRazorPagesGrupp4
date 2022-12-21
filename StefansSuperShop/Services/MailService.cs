@@ -9,6 +9,7 @@ using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using StefansSuperShop.Configuration;
+using StefansSuperShop.Data.Mail;
 using StefansSuperShop.Data.Model;
 
 namespace StefansSuperShop.Services;
@@ -30,6 +31,8 @@ public class MailService : IMailService
     
     public async Task SendAsync(MailData mailData, CancellationToken ct)
     {
+        NewsletterTemplate mailTemplate = new();
+        string test = mailTemplate.GetNewsletterBody(mailData.Body);
         try
         {
             var mail = new MimeMessage();
@@ -58,7 +61,7 @@ public class MailService : IMailService
             // Add Content to Mime Message
             var body = new BodyBuilder();
             mail.Subject = mailData.Subject;
-            body.HtmlBody = mailData.Body;
+            body.HtmlBody = test;
             mail.Body = body.ToMessageBody();
 
             #endregion
