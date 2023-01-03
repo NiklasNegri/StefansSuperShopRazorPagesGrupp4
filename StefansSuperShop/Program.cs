@@ -16,8 +16,8 @@ public class Program
             var dataInitializer = serviceProvider.GetRequiredService<DataInitializer>();
             dataInitializer.SeedData().GetAwaiter().GetResult();
         }
-
         host.Run();
+
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args)

@@ -19,7 +19,7 @@ namespace StefansSuperShop.Pages.Admin.Newsletters
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            _newsletterService.GetById(id);
+            await _newsletterService.GetById(id);
 
             return Page();
         }

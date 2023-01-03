@@ -16,7 +16,7 @@ Based on GitFlow [here](https://www.atlassian.com/git/tutorials/comparing-workfl
 We will use the following branches:
 
 - `develop` - The main development branch. This is where most of the work is done.
-- `production` - The main release branch. No commits directly to this branch!
+- `main` - The main release branch. No commits directly to this branch!
 - `feature/...` - Feature branches. Used when making additions or changes to the development branch.
 - `fix/...` - Like a feature branch but for bug fixes.
 

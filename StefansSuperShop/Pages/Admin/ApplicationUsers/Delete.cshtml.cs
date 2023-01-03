@@ -20,7 +20,7 @@ namespace StefansSuperShop.Pages.Admin.ApplicationUsers
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            _userService.GetById(id);
+            await _userService.GetById(id);
             return Page();
         }
 
