@@ -41,7 +41,6 @@ public class Startup
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<INewsletterRepository, NewsletterRepository>();
         services.AddTransient<DataInitializer>();
-        services.AddTransient<MailService>();
         services.AddRazorPages();
 		services.Configure<MailSettings>(Configuration.GetSection(nameof(MailSettings)));
     }
