@@ -10,6 +10,7 @@ namespace StefansSuperShop.Data.Helpers
         {
             //ApplicationUserDTO -> ApplicationUser
             CreateMap<ApplicationUserDTO, ApplicationUser>();
+            CreateMap<ProductDTO, Product>();
         }
     }
 }

@@ -35,8 +35,10 @@ public class Startup
 
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<INewsletterService, NewsletterService>();
+        services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<INewsletterRepository, NewsletterRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
         services.AddTransient<DataInitializer>();
         services.AddRazorPages();
     }
