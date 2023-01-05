@@ -11,7 +11,7 @@ namespace StefansSuperShop.Services
     public interface IUserService
     {
         public Task RegisterUser(ApplicationUserDTO model);
-        public Task<ApplicationUser> GetById(string email);
+        public Task<ApplicationUser> GetById(string id);
         public Task<IEnumerable<ApplicationUser>> GetAll();
         public Task UpdateUser(ApplicationUserDTO model);
         public Task UpdateUserFromNewsletter(ApplicationUserDTO model);
