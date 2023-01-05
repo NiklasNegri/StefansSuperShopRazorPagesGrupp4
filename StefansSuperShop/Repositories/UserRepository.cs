@@ -72,8 +72,7 @@ namespace StefansSuperShop.Repositories
 
         public async Task<ApplicationUser> GetByEmail(string email)
         {
-            var users = await GetAll();
-            return users.First(u => u.NormalizedEmail == email.ToUpper());
+            return await _context.ApplicationUsers.FirstAsync(u => u.NormalizedEmail == email.ToUpper());
         }
 
         public async Task<IEnumerable<ApplicationUser>> GetAll()
