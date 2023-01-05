@@ -6,6 +6,7 @@ using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Data.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace StefansSuperShop.Repositories
@@ -15,6 +16,7 @@ namespace StefansSuperShop.Repositories
         public Task RegisterUser(ApplicationUserDTO model);
         public Task RegisterUpgradeFromNewsletter(ApplicationUserDTO model);
         public Task<ApplicationUser> GetById(string id);
+        public Task<ApplicationUser> GetByEmail(string email);
         public Task<IEnumerable<ApplicationUser>> GetAll();
         public Task UpdateEmail(ApplicationUserDTO model);
         public Task UpdatePassword(ApplicationUserDTO model);
@@ -66,6 +68,12 @@ namespace StefansSuperShop.Repositories
         public async Task<ApplicationUser> GetById(string id)
         {
             return await _context.ApplicationUsers.FindAsync(id);
+        }
+
+        public async Task<ApplicationUser> GetByEmail(string email)
+        {
+            var users = await GetAll();
+            return users.First(u => u.NormalizedEmail == email.ToUpper());
         }
 
         public async Task<IEnumerable<ApplicationUser>> GetAll()
