@@ -11,7 +11,8 @@ namespace StefansSuperShop.Services
     public interface IUserService
     {
         public Task RegisterUser(ApplicationUserDTO model);
-        public Task<ApplicationUser> GetById(string email);
+        public Task<ApplicationUser> GetById(string id);
+        public Task<ApplicationUser> GetByEmail(string email);
         public Task<IEnumerable<ApplicationUser>> GetAll();
         public Task UpdateUser(ApplicationUserDTO model);
         public Task UpdateUserFromNewsletter(ApplicationUserDTO model);
@@ -36,9 +37,14 @@ namespace StefansSuperShop.Services
             await _userRepository.RegisterUser(model);
         }
 
-        public Task<ApplicationUser> GetById(string id) => _userRepository.GetById(id);
+        public Task<ApplicationUser> GetById(string id) => 
+            _userRepository.GetById(id) ?? throw new Exception("User does not exist!");
 
-        public Task<IEnumerable<ApplicationUser>> GetAll() => _userRepository.GetAll();
+        public Task<ApplicationUser> GetByEmail(string email) =>
+            _userRepository.GetByEmail(email) ?? throw new Exception("User with that email does not exist!");
+
+        public Task<IEnumerable<ApplicationUser>> GetAll() => 
+            _userRepository.GetAll() ?? throw new Exception("No users found!");
 
         public async Task UpdateUser(ApplicationUserDTO model)
         {
