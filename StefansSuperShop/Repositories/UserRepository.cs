@@ -47,17 +47,20 @@ namespace StefansSuperShop.Repositories
             user.UserName = model.NewEmail;
             user.Email = model.NewEmail;
             user.EmailConfirmed = true;
+            user.Role = model.Role;
 
             if (model.NewPassword == null)
             {
                 user.NewsletterIsActive = true;
                 await _userManager.CreateAsync(user);
+                await _userManager.AddToRoleAsync(user, model.Role);
                 return;
             }
 
             await _userManager.CreateAsync(user, model.NewPassword);
+            await _userManager.AddToRoleAsync(user, model.Role);
         }
-        
+
         public async Task RegisterUpgradeFromNewsletter(ApplicationUserDTO model)
         {
             var user = await GetById(model.Id);

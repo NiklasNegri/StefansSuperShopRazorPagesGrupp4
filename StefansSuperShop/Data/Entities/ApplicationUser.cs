@@ -8,5 +8,6 @@ namespace StefansSuperShop.Data.Entities
     {
         [Display(Name = "Active Newsletter")]
         public bool NewsletterIsActive { get; set; }
+        public string Role { get; set; }
     }
 }
