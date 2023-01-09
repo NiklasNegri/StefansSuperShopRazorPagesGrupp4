@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StefansSuperShop.Pages.BackendTests.Newsletters
+namespace StefansSuperShop.Pages.Admin.Newsletters
 {
     public class IndexModel : PageModel
     {

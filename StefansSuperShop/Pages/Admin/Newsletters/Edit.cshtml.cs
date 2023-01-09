@@ -1,16 +1,16 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Services;
 using System.Threading.Tasks;
 
-namespace StefansSuperShop.Pages.BackendTests.Newsletters
+namespace StefansSuperShop.Pages.Admin.Newsletters
 {
-    public class SendModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly INewsletterService _newsletterService;
 
-        public SendModel(INewsletterService newsletterService)
+        public EditModel(INewsletterService newsletterService)
         {
             _newsletterService = newsletterService;
         }
@@ -26,7 +26,7 @@ namespace StefansSuperShop.Pages.BackendTests.Newsletters
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            await _newsletterService.CreateSentNewsletter(id);
+            await _newsletterService.EditNewsletter(id, Newsletter.Title, Newsletter.Content);
 
             return RedirectToPage("./Index");
         }

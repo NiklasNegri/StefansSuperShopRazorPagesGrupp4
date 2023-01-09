@@ -4,24 +4,31 @@ using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Services;
 using System.Threading.Tasks;
 
-namespace StefansSuperShop.Pages.BackendTests.Newsletters
+namespace StefansSuperShop.Pages.Admin.Newsletters
 {
-    public class DetailsModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly INewsletterService _newsletterService;
 
-        public DetailsModel(INewsletterService newsletterService)
+        public DeleteModel(INewsletterService newsletterService)
         {
             _newsletterService = newsletterService;
         }
 
+        [BindProperty]
         public Newsletter Newsletter { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
             await _newsletterService.GetById(id);
-
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            await _newsletterService.DeleteNewsletter(id);
+
+            return RedirectToPage("./Index");
         }
     }
 }

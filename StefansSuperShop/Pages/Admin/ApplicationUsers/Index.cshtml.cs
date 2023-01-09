@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
+namespace StefansSuperShop.Pages.Admin.ApplicationUsers
 {
     public class IndexModel : PageModel
     {

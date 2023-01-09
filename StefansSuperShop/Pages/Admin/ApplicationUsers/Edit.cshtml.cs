@@ -4,7 +4,7 @@ using StefansSuperShop.Data.DTOs;
 using StefansSuperShop.Services;
 using System.Threading.Tasks;
 
-namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
+namespace StefansSuperShop.Pages.Admin.ApplicationUsers
 {
     public class EditModel : PageModel
     {
@@ -32,7 +32,7 @@ namespace StefansSuperShop.Pages.BackendTests.ApplicationUsers
             {
                 await _userService.UpdateUser(Model);
             }
-            else if (user.NewsletterIsActive != Model.NewsletterActive)
+            else if (user.NewsletterIsActive != Model.NewsletterIsActive)
             {
                 await _userService.UpdateNewsletterActive(Model);
             }

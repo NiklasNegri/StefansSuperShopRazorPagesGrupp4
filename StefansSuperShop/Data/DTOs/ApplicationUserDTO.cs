@@ -11,6 +11,6 @@
         public string NewPassword { get; set; }
         public string PasswordHash { get; set; }
         public string Role { get; set; }
-        public bool NewsletterActive { get; set; }
+        public bool NewsletterIsActive { get; set; }
     }
 }
