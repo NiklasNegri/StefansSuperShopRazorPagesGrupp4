@@ -1,10 +1,18 @@
 ﻿@page
 @model StefansSuperShop.Pages.Admin.Newsletters.SendModel
-
-<form method="post">
-    <input type="hidden" asp-for="Newsletter.NewsletterId" />
-    <input type="submit" value="Send" class="btn btn-default" /> |
-</form>
-
 @{
+    ViewData["Title"] = "Send Newsletter";
 }
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+
+    <h4>Are you sure you want to send this Newsletter?</h4>
+    <hr />
+
+    <a class="btn btn-primary" asp-page="Index">Back to List</a>
+
+    <form method="post">
+        <input type="hidden" asp-for="Newsletter.NewsletterId" />
+        <input type="submit" value="Send" class="btn btn-success" />
+    </form>
+</div>
