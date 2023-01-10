@@ -11,9 +11,12 @@ namespace StefansSuperShop.Services
     public interface IUserService
     {
         public Task RegisterUser(ApplicationUserDTO model);
+        public Task RegisterNewsletterUser(ApplicationUserDTO model);
         public Task<ApplicationUser> GetById(string id);
         public Task<ApplicationUser> GetByEmail(string email);
+        public Task<IList<string>> GetUserRoles(string id);
         public Task<IEnumerable<ApplicationUser>> GetAll();
+        public Task<IList<ApplicationUserDTO>> GetAllUsersAndRoles();
         public Task UpdateUser(ApplicationUserDTO model);
         public Task UpdateUserFromNewsletter(ApplicationUserDTO model);
         public Task UpdateNewsletterActive(ApplicationUserDTO model);
@@ -37,6 +40,16 @@ namespace StefansSuperShop.Services
             await _userRepository.RegisterUser(model);
         }
 
+        public async Task RegisterNewsletterUser(ApplicationUserDTO model)
+        {
+            var users = await GetAll();
+            if (users.Any(u => u.Email == model.NewEmail))
+            {
+                throw new Exception("User with that email is already registered!");
+            }
+            await _userRepository.RegisterNewsletterUser(model);
+        }
+
         public Task<ApplicationUser> GetById(string id) => 
             _userRepository.GetById(id) ?? throw new Exception("User does not exist!");
 
@@ -45,6 +58,12 @@ namespace StefansSuperShop.Services
 
         public Task<IEnumerable<ApplicationUser>> GetAll() => 
             _userRepository.GetAll() ?? throw new Exception("No users found!");
+
+        public Task<IList<string>> GetUserRoles(string id) =>
+            _userRepository.GetUserRoles(id) ?? throw new Exception("No users found!");
+
+        public Task<IList<ApplicationUserDTO>> GetAllUsersAndRoles() =>
+            _userRepository.GetAllUsersAndRoles() ?? throw new Exception("No users found!");
 
         public async Task UpdateUser(ApplicationUserDTO model)
         {
