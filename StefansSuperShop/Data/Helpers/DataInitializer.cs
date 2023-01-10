@@ -217,12 +217,6 @@ namespace StefansSuperShop.Data.Helpers
         {
             if (_userService.GetByEmail(applicationUser.NewEmail).Result != null) return;
 
-            var user = new ApplicationUserDTO
-            {
-                NewEmail = applicationUser.NewEmail,
-                NewPassword = applicationUser.NewPassword
-            };
-
             await _userService.RegisterUser(applicationUser);
         }
     } 

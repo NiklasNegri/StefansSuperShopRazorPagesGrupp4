@@ -57,14 +57,21 @@ namespace StefansSuperShop.Repositories
             }
 
             await _userManager.CreateAsync(user, model.NewPassword);
-            await _userManager.AddToRolesAsync(user, new string[] {model.Role});
+
+            if (!string.IsNullOrEmpty(model.Role))
+            {
+                await _userManager.AddToRoleAsync(user, model.Role);
+            }
         }
         
         public async Task RegisterUpgradeFromNewsletter(ApplicationUserDTO model)
         {
             var user = await GetById(model.Id);
             await _userManager.AddPasswordAsync(user, model.NewPassword);
-            await _userManager.AddToRoleAsync(user, model.Role);
+            if (!string.IsNullOrEmpty(model.Role))
+            {
+                await _userManager.AddToRoleAsync(user, model.Role);
+            }
         }
 
         public async Task<ApplicationUser> GetById(string id)
