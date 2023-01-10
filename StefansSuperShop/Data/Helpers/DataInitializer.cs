@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using StefansSuperShop.Data.DTOs;
 using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Services;
 using System;
@@ -207,10 +208,16 @@ namespace StefansSuperShop.Data.Helpers
 
         private async Task SeedUsers()
         {
-            if (_dbContext.ApplicationUsers.Any(u => u.Email == "admin@admin.se" || u.Email == "customer@customer.se")) return;
-            await _userService.RegisterUser(new DTOs.ApplicationUserDTO { NewEmail = "admin@admin.se", NewPassword = "Admin123#", Role = "Admin" });
-            await _userService.RegisterUser(new DTOs.ApplicationUserDTO { NewEmail = "customer@customer.se", NewPassword = "Customer123#", Role = "Customer" });
-            await _userService.RegisterUser(new DTOs.ApplicationUserDTO { NewEmail = "active@newsletter.se", NewPassword = "Newsletter123#", Role = "Customer", NewsletterIsActive = true });
+            await AddUserIfNotExists(new ApplicationUserDTO { NewEmail = "admin@admin.se", NewPassword = "Admin123#", Role = "Admin" });
+            await AddUserIfNotExists(new ApplicationUserDTO { NewEmail = "customer@customer.se", NewPassword = "Customer123#", Role = "Customer" });
+            await AddUserIfNotExists(new ApplicationUserDTO { NewEmail = "active@newsletter.se", Role = "Customer", NewsletterIsActive = true });
         }
-    }
+
+        private async Task AddUserIfNotExists(ApplicationUserDTO applicationUser)
+        {
+            if (_userService.GetByEmail(applicationUser.NewEmail).Result != null) return;
+
+            await _userService.RegisterUser(applicationUser);
+        }
+    } 
 }

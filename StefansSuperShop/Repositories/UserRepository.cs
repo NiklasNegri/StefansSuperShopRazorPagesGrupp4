@@ -6,7 +6,6 @@ using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Data.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace StefansSuperShop.Repositories
@@ -46,8 +45,10 @@ namespace StefansSuperShop.Repositories
             user.Id = Guid.NewGuid().ToString();
             user.UserName = model.NewEmail;
             user.Email = model.NewEmail;
+            // TODO EmailConfirmed should not be set as true as standard for registring users
             user.EmailConfirmed = true;
 
+            // this is a strange way to solve it is it not?
             if (model.NewPassword == null)
             {
                 user.NewsletterIsActive = true;
@@ -56,23 +57,31 @@ namespace StefansSuperShop.Repositories
             }
 
             await _userManager.CreateAsync(user, model.NewPassword);
+
+            if (!string.IsNullOrEmpty(model.Role))
+            {
+                await _userManager.AddToRoleAsync(user, model.Role);
+            }
         }
         
         public async Task RegisterUpgradeFromNewsletter(ApplicationUserDTO model)
         {
             var user = await GetById(model.Id);
             await _userManager.AddPasswordAsync(user, model.NewPassword);
-            await _userManager.AddToRoleAsync(user, model.Role);
+            if (!string.IsNullOrEmpty(model.Role))
+            {
+                await _userManager.AddToRoleAsync(user, model.Role);
+            }
         }
 
         public async Task<ApplicationUser> GetById(string id)
         {
-            return await _context.ApplicationUsers.FindAsync(id);
+            return await _userManager.FindByIdAsync(id);
         }
 
         public async Task<ApplicationUser> GetByEmail(string email)
         {
-            return await _context.ApplicationUsers.FirstAsync(u => u.NormalizedEmail == email.ToUpper());
+            return await _userManager.FindByEmailAsync(email);
         }
 
         public async Task<IEnumerable<ApplicationUser>> GetAll()
