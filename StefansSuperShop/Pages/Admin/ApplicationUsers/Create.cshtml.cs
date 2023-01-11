@@ -31,7 +31,7 @@ namespace StefansSuperShop.Pages.Admin.ApplicationUsers
             }
 
             Model.UserName = Model.NewEmail;
-            Model.Role = Request.Form["role"];
+            Model.Roles = Request.Form["role"];
             await _userService.RegisterUser(Model);
 
             return RedirectToPage("./Index");
