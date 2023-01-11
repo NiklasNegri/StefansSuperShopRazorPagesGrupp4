@@ -28,11 +28,11 @@ namespace StefansSuperShop.Pages.Admin.ApplicationUsers
         {
             var user = await _userService.GetById(id);
             Model.Id = id;
-            if (Model.Email != null || Model.Email != null)
+            if (user.Email != Model.Email)
             {
                 await _userService.UpdateUser(Model);
             }
-            else if (user.NewsletterIsActive != Model.NewsletterIsActive)
+            if (user.NewsletterIsActive != Model.NewsletterIsActive)
             {
                 await _userService.UpdateNewsletterActive(Model);
             }

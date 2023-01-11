@@ -71,6 +71,7 @@ namespace StefansSuperShop.Repositories
 
             user.NewsletterIsActive = true;
             await _userManager.CreateAsync(user);
+            await _userManager.AddToRolesAsync(user, model.Roles);
         }
         
         public async Task RegisterUpgradeFromNewsletter(ApplicationUserDTO model)
@@ -104,6 +105,7 @@ namespace StefansSuperShop.Repositories
                               {
                                   Id = user.Id,
                                   UserName = user.UserName,
+                                  NewsletterIsActive = user.NewsletterIsActive,
                                   Roles = (from r in _context.Roles
                                            join ur in _context.UserRoles on r.Id equals ur.RoleId
                                            where ur.UserId == user.Id
