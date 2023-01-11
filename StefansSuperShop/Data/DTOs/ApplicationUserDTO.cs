@@ -1,4 +1,6 @@
-﻿namespace StefansSuperShop.Data.DTOs
+﻿using System.Collections;
+
+namespace StefansSuperShop.Data.DTOs
 {
     public class ApplicationUserDTO
     {
@@ -10,7 +12,7 @@
         public string CurrentPassword { get; set; }
         public string NewPassword { get; set; }
         public string PasswordHash { get; set; }
-        public string Role { get; set; }
+        public string[] Roles { get; set; }
         public bool NewsletterIsActive { get; set; }
     }
 }
