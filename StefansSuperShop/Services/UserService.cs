@@ -33,7 +33,7 @@ namespace StefansSuperShop.Services
         public async Task RegisterUser(ApplicationUserDTO model)
         {
             var users = await GetAll();
-            if (users.Any(u => u.Email == model.NewEmail))
+            if (users.Any(u => u.Email == model.Email))
             {
                 throw new Exception("User with that email is already registered!");
             }
@@ -43,7 +43,7 @@ namespace StefansSuperShop.Services
         public async Task RegisterNewsletterUser(ApplicationUserDTO model)
         {
             var users = await GetAll();
-            if (users.Any(u => u.Email == model.NewEmail))
+            if (users.Any(u => u.Email == model.Email))
             {
                 throw new Exception("User with that email is already registered!");
             }
@@ -72,11 +72,11 @@ namespace StefansSuperShop.Services
                 throw new Exception("User does not exist!");
             }
 
-            if (model.NewEmail != null)
+            if (model.Email != null)
             {
                 await _userRepository.UpdateEmail(model);
             }
-            else if (model.NewPassword != null)
+            else if (model.Password != null)
             {
                 await _userRepository.UpdatePassword(model);
             }

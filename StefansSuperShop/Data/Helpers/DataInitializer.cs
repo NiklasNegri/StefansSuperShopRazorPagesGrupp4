@@ -208,17 +208,17 @@ namespace StefansSuperShop.Data.Helpers
 
         private async Task SeedUsers()
         {
-            await AddUserIfNotExists(new ApplicationUserDTO { NewEmail = "admin@admin.se", NewPassword = "Admin123#", Roles = new string[] { "Admin" } });
-            await AddUserIfNotExists(new ApplicationUserDTO { NewEmail = "customer@customer.se", NewPassword = "Customer123#", Roles = new string[] { "Customer" } });
-            await AddUserIfNotExists(new ApplicationUserDTO { NewEmail = "active@newsletter.se", Roles = new string[] { "Customer" }, NewsletterIsActive = true });
-            await AddUserIfNotExists(new ApplicationUserDTO { NewEmail = "test@manyroles.se", NewPassword = "Customer123#", Roles = new string[] { "Customer", "Admin" } });
+            await AddUserIfNotExists(new ApplicationUserDTO { Email = "admin@admin.se", Password = "Admin123#", Roles = new string[] { "Admin" } });
+            await AddUserIfNotExists(new ApplicationUserDTO { Email = "customer@customer.se", Password = "Customer123#", Roles = new string[] { "Customer" } });
+            await AddUserIfNotExists(new ApplicationUserDTO { Email = "active@newsletter.se", Roles = new string[] { "Customer" }, NewsletterIsActive = true });
+            await AddUserIfNotExists(new ApplicationUserDTO { Email = "test@manyroles.se", Password = "Customer123#", Roles = new string[] { "Customer", "Admin" } });
         }
 
         private async Task AddUserIfNotExists(ApplicationUserDTO applicationUser)
         {
-            if (_userService.GetByEmail(applicationUser.NewEmail).Result != null) return;
+            if (_userService.GetByEmail(applicationUser.Email).Result != null) return;
 
-            if (applicationUser.NewPassword == null)
+            if (applicationUser.Password == null)
             {
                 await _userService.RegisterNewsletterUser(applicationUser);
             }

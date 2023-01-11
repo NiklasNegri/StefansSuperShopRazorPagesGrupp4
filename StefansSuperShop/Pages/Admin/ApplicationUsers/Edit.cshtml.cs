@@ -28,7 +28,7 @@ namespace StefansSuperShop.Pages.Admin.ApplicationUsers
         {
             var user = await _userService.GetById(id);
             Model.Id = id;
-            if (Model.NewEmail != null || Model.NewEmail != null)
+            if (Model.Email != null || Model.Email != null)
             {
                 await _userService.UpdateUser(Model);
             }

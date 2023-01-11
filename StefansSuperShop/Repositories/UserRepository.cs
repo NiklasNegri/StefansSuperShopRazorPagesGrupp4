@@ -47,14 +47,14 @@ namespace StefansSuperShop.Repositories
         {
             var user = _mapper.Map<ApplicationUser>(model);
             user.Id = Guid.NewGuid().ToString();
-            user.UserName = model.NewEmail;
-            user.Email = model.NewEmail;
+            user.UserName = model.Email;
+            user.Email = model.Email;
             user.NewsletterIsActive = false;
 
             // TODO EmailConfirmed should not be set as true as standard for registring users
             user.EmailConfirmed = true;
 
-            await _userManager.CreateAsync(user, model.NewPassword);
+            await _userManager.CreateAsync(user, model.Password);
             await _userManager.AddToRolesAsync(user, model.Roles);
 
         }
@@ -63,8 +63,8 @@ namespace StefansSuperShop.Repositories
         {
             var user = _mapper.Map<ApplicationUser>(model);
             user.Id = Guid.NewGuid().ToString();
-            user.UserName = model.NewEmail;
-            user.Email = model.NewEmail;
+            user.UserName = model.Email;
+            user.Email = model.Email;
 
             // TODO EmailConfirmed should not be set as true as standard for registring users
             user.EmailConfirmed = true;
@@ -76,7 +76,7 @@ namespace StefansSuperShop.Repositories
         public async Task RegisterUpgradeFromNewsletter(ApplicationUserDTO model)
         {
             var user = await GetById(model.Id);
-            await _userManager.AddPasswordAsync(user, model.NewPassword);
+            await _userManager.AddPasswordAsync(user, model.Password);
             await _userManager.AddToRolesAsync(user, model.Roles);
         }
 
@@ -123,9 +123,9 @@ namespace StefansSuperShop.Repositories
         public async Task UpdateEmail(ApplicationUserDTO model)
         {
             var user = await GetById(model.Id);
-            user.UserName = model.NewEmail;
-            var token = _userManager.GenerateChangeEmailTokenAsync(user, model.NewEmail).ToString();
-            await _userManager.ChangeEmailAsync(user, model.NewEmail, token);
+            user.UserName = model.Email;
+            var token = _userManager.GenerateChangeEmailTokenAsync(user, model.Email).ToString();
+            await _userManager.ChangeEmailAsync(user, model.Email, token);
             await _userManager.UpdateNormalizedEmailAsync(user);
             await _userManager.UpdateAsync(user);
         }
@@ -133,7 +133,7 @@ namespace StefansSuperShop.Repositories
         public async Task UpdatePassword(ApplicationUserDTO model)
         {
             var user = await GetById(model.Id);
-            await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+            await _userManager.ChangePasswordAsync(user, model.Password, model.Password);
         }
 
         public async Task UpdateNewsletterActive(ApplicationUserDTO model)
