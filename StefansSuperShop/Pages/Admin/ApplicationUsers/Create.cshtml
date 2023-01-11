@@ -14,16 +14,16 @@
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Model.NewEmail" class="control-label"></label>
-                    <input asp-for="Model.NewEmail" class="form-control" />
+                    <label asp-for="Model.Email" class="control-label"></label>
+                    <input asp-for="Model.Email" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label asp-for="Model.NewPassword" class="control-label"></label>
-                    <input asp-for="Model.NewPassword" class="form-control" />
+                    <label asp-for="Model.Password" class="control-label"></label>
+                    <input asp-for="Model.Password" class="form-control" />
                 </div>
                 <div class="form-group">
                     <select name="role">
-                        <label asp-for="Model.Role" class="control-label"></label>
+                        <label asp-for="Model.Roles" class="control-label"></label>
                         <option value="">Select a role</option>
                         <option value="Admin">Admin</option>
                         <option value="Customer">Customer</option>
