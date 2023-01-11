@@ -25,7 +25,7 @@
                     @Html.DisplayNameFor(model => model.ApplicationUsers[0].UserName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUsers[0].Email)
+                    @Html.DisplayNameFor(model => model.ApplicationUsers[0].Roles)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ApplicationUsers[0].NewsletterIsActive)
@@ -40,7 +40,10 @@
                         @Html.DisplayFor(modelItem => item.UserName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Email)
+                        @foreach (var role in item.Roles)
+                        {
+                          @Html.DisplayTextFor(modelItem => role);
+                        }
                     </td>
                     <td>
                         @Html.DisplayTextFor(modelItem => item.NewsletterIsActive);

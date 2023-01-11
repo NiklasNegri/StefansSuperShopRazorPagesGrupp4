@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using StefansSuperShop.Data.DTOs;
 using StefansSuperShop.Data.Entities;
 using StefansSuperShop.Services;
 using System.Collections.Generic;
@@ -16,11 +17,11 @@ namespace StefansSuperShop.Pages.Admin.ApplicationUsers
             _userService = userService;
         }
 
-        public IList<ApplicationUser> ApplicationUsers { get; set; }
+        public IList<ApplicationUserDTO> ApplicationUsers { get; set; }
 
         public async Task OnGetAsync()
         {
-            var users = await _userService.GetAll();
+            var users = await _userService.GetAllUsersAndRoles();
             ApplicationUsers = users.ToList();
         }
     }
