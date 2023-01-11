@@ -1,6 +1,11 @@
 ﻿@page
 @model StefansSuperShop.Pages.Admin.ApplicationUsers.EditModel
-
+@using Microsoft.AspNetCore.Identity;
+@using StefansSuperShop.Data.Entities;
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var user = SignInManager.UserManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+}
 @{
     ViewData["Title"] = "Edit";
 }
@@ -8,7 +13,7 @@
 <div class="container">
     <h2>@ViewData["Title"]</h2>
 
-    <h4>Users</h4>
+    <h4>Manage [emailaddress]</h4>
     <hr />
     <div class="col-md-4">
         <h4>Change email</h4>
@@ -21,7 +26,7 @@
                 <span asp-validation-for="Model.NewEmail" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -41,7 +46,7 @@
                 <span asp-validation-for="Model.CurrentPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -49,10 +54,19 @@
         <h4>Subscribe/Unsubscribe from newsletter</h4>
         <form method="post">
             <div class="form-group">
-                <label asp-for="Model.NewsletterIsActive" class="control-label"></label>
-                <input asp-for="Model.NewsletterIsActive" class="form-control" />
-                <span asp-validation-for="Model.NewsletterIsActive" class="text-danger"></span>
-                <input type="submit" value="Save" class="btn btn-default" />
+                @if (user.NewsletterIsActive)
+                {
+                    <label asp-for="Model.NewsletterIsActive" class="control-label"></label>
+                    <input asp-for="Model.NewsletterIsActive" class="form-control" style="width:10%;" checked />
+                }
+                @if (!user.NewsletterIsActive)
+                {
+                    <label asp-for="Model.NewsletterIsActive" class="control-label"></label>
+                    <input asp-for="Model.NewsletterIsActive" class="form-control" style="width:10%;" />
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

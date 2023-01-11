@@ -27,9 +27,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.ApplicationUsers[0].Email)
                 </th>
-                @*<th>
-                @Html.DisplayNameFor(model => model.ApplicationUsers[0].PasswordHash)
-                </th>*@
                 <th>
                     @Html.DisplayNameFor(model => model.ApplicationUsers[0].NewsletterIsActive)
                 </th>
@@ -45,9 +42,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
-                    @*  <td>
-                @Html.DisplayFor(modelItem => item.PasswordHash);
-                </td>*@
                     <td>
                         @Html.DisplayTextFor(modelItem => item.NewsletterIsActive);
                     </td>
@@ -60,8 +54,8 @@
         </tbody>
     </table>
     <div>
-        <a class="btn btn-primary btn" asp-page="/Admin/Index">Back to Dashboard</a>
-        <a class="btn btn-primary btn" asp-page="Create">Register User</a>
-        <a class="btn btn-primary btn" asp-page="RegisterNewsletter">Register newsletter user</a>
+        <a class="btn btn-primary" asp-page="/Admin/Index">Back to Dashboard</a>
+        <a class="btn btn-primary" asp-page="Create">Register User</a>
+        <a class="btn btn-primary" asp-page="RegisterNewsletter">Register newsletter user</a>
     </div>
 </div>
