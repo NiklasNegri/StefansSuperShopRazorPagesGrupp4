@@ -31,7 +31,7 @@ namespace StefansSuperShop.Pages.Admin.ApplicationUsers
             }
 
             Model.UserName = Model.Email;
-            await _userService.RegisterUser(Model);
+            await _userService.RegisterNewsletterUser(Model);
 
             return RedirectToPage("./Index");
         }

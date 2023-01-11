@@ -65,13 +65,14 @@ namespace StefansSuperShop.Repositories
             user.Id = Guid.NewGuid().ToString();
             user.UserName = model.Email;
             user.Email = model.Email;
+            
 
             // TODO EmailConfirmed should not be set as true as standard for registring users
             user.EmailConfirmed = true;
 
             user.NewsletterIsActive = true;
             await _userManager.CreateAsync(user);
-            await _userManager.AddToRolesAsync(user, model.Roles);
+            await _userManager.AddToRoleAsync(user, "Customer");
         }
         
         public async Task RegisterUpgradeFromNewsletter(ApplicationUserDTO model)
