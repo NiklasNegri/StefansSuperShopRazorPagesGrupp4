@@ -16,7 +16,7 @@ public class Program
             var dataInitializer = serviceProvider.GetRequiredService<DataInitializer>();
             dataInitializer.SeedData();
         }
-
+        //ta bort
         host.Run();
     }
 
