@@ -18,7 +18,6 @@ public class Program
         }
 
         host.Run();
-
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args)
