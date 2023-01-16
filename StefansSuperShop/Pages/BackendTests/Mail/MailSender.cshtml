@@ -1,0 +1,52 @@
+﻿@page
+@model StefansSuperShop.Pages.BackendTests.Mail.MailSenderModel
+@{
+    ViewData["Title"] = "Send Mail";
+}
+
+
+
+<h2>Create</h2>
+
+<h4>Mail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Model.To" class="control-label"></label>
+                <input asp-for="Model.To" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Model.Cc" class="control-label"></label>
+                <input asp-for="Model.Cc" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Model.Bcc" class="control-label"></label>
+                <input asp-for="Model.Bcc" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Model.Subject" class="control-label"></label>
+                <input asp-for="Model.Subject" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Model.Body" class="control-label"></label>
+                <input asp-for="Model.Body" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

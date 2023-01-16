@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+.idea/.idea.StefansSuperShop/.idea/.name
+.idea/.idea.StefansSuperShop/.idea/indexLayout.xml
+.idea/.idea.StefansSuperShop/.idea/projectSettingsUpdater.xml
+.idea/.idea.StefansSuperShop/.idea/vcs.xml
+.idea/.idea.StefansSuperShop/.idea/workspace.xml
+/StefansSuperShop/appsettings.json

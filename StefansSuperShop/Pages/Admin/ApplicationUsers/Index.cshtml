@@ -1,0 +1,64 @@
+﻿@page
+@model StefansSuperShop.Pages.Admin.ApplicationUsers.IndexModel
+
+@{
+    ViewData["Title"] = "Users";
+}
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+    <h4>Manage</h4>
+
+    <hr />
+    
+    <div>
+        <a class="btn btn-primary" asp-page="/Admin/Index">Back to Dashboard</a>
+        <a class="btn btn-primary" asp-page="Create">Register User</a>
+        <a class="btn btn-primary" asp-page="RegisterNewsletter">Register newsletter user</a>
+    </div>
+
+    <hr />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApplicationUsers[0].UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApplicationUsers[0].Roles)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApplicationUsers[0].NewsletterIsActive)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ApplicationUsers)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @foreach (var role in item.Roles)
+                        {
+                          @Html.DisplayTextFor(modelItem => role);
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayTextFor(modelItem => item.NewsletterIsActive);
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        <a class="btn btn-primary" asp-page="/Admin/Index">Back to Dashboard</a>
+        <a class="btn btn-primary" asp-page="Create">Register User</a>
+        <a class="btn btn-primary" asp-page="RegisterNewsletter">Register newsletter user</a>
+    </div>
+</div>

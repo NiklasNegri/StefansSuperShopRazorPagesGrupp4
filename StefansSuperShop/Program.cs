@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using StefansSuperShop.Data;
+using StefansSuperShop.Data.Helpers;
 
 namespace StefansSuperShop;
 
@@ -14,10 +14,12 @@ public class Program
         {
             var serviceProvider = scope.ServiceProvider;
             var dataInitializer = serviceProvider.GetRequiredService<DataInitializer>();
-            dataInitializer.SeedData();
+            dataInitializer.SeedData().GetAwaiter().GetResult();
         }
         //ta bort
         host.Run();
+        host.Run();
+
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args)

@@ -1,6 +1,22 @@
 ﻿@page
 @model StefansSuperShop.Pages.Admin.IndexModel
-@{
-}
 
-<a href="/Admin/Products">Products</a>
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+    <h4>Manage</h4>
+
+    <hr />
+
+    <div class="col-md-4 col-xs-6">
+        <a href="/Admin/Products"><img class="img-responsive" src="~/img/Admin/StefansSuperShop_Products.png" style="width:175px"></a>
+    </div>
+    <div class="col-md-4 col-xs-6">
+        <a href="/Admin/ApplicationUsers"><img class="img-responsive" src="~/img/Admin/StefansSuperShop_User.png" style="width:175px"></a>
+    </div>
+    <div class="col-md-4 col-xs-6">
+        <a href="/Admin/Newsletters"><img class="img-responsive" src="~/img/Admin/StefansSuperShop_Newsletter.png" style="width:175px"></a>
+    </div>
+</div>

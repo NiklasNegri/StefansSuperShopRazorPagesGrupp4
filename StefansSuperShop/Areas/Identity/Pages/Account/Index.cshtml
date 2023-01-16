@@ -1,0 +1,79 @@
+﻿@page
+@model StefansSuperShop.Areas.Identity.Pages.Account.IndexModel;
+@using StefansSuperShop.Data.Entities;
+@inject SignInManager<ApplicationUser> SignInManager;
+@{
+    var user = SignInManager.UserManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+}
+
+@{
+    ViewData["Title"] = "My Account";
+}
+
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+
+    <h4>Manage</h4>
+    <hr />
+    <div class="col-md-4">
+        <h4>Change email</h4>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Model.Id" />
+            <div class="form-group">
+                <label asp-for="Model.Email" class="control-label"></label>
+                <input asp-for="Model.Email" class="form-control" />
+                <span asp-validation-for="Model.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <h4>Change password</h4>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Model.Id" />
+            <div class="form-group">
+                <label asp-for="Model.Password" class="control-label"></label>
+                <input asp-for="Model.Password" class="form-control" />
+                <span asp-validation-for="Model.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model.Password" class="control-label"></label>
+                <input asp-for="Model.Password" class="form-control" />
+                <span asp-validation-for="Model.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <h4>Subscribe/Unsubscribe from newsletter</h4>
+        <form method="post">
+            <div class="form-group">
+                @if (user.NewsletterIsActive)
+                {
+                    <label asp-for="Model.NewsletterIsActive" class="control-label"></label>
+                    <input asp-for="Model.NewsletterIsActive" class="form-control" style="width:10%;" checked />
+                }
+                @if (!user.NewsletterIsActive)
+                {
+                    <label asp-for="Model.NewsletterIsActive" class="control-label"></label>
+                    <input asp-for="Model.NewsletterIsActive" class="form-control" style="width:10%;" />
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary"  />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
