@@ -1,14 +1,9 @@
-﻿using System;
-using Moq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StefansSuperShop.Services;
-using StefansSuperShop.Data.Model;
+﻿using AutoFixture;
 using Microsoft.Extensions.Options;
+using Moq;
 using StefansSuperShop.Configuration;
-using AutoFixture;
+using StefansSuperShop.Data.Model;
+using StefansSuperShop.Services;
 
 namespace StefansSuperShop.Unit.Test.Services
 {
