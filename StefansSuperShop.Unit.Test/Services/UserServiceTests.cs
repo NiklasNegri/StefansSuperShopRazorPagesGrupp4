@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using Castle.Components.DictionaryAdapter.Xml;
 using Moq;
 using StefansSuperShop.Data.DTOs;
 using StefansSuperShop.Data.Entities;
@@ -160,4 +161,73 @@ public class UserServiceTests
 
         await Assert.ThrowsAsync<Exception>(() => _sut.GetUserRoles("1"));
     }
+
+    [Fact]
+    public async Task GetAllUsersAndRoles_UsersExist_ReturnsUserWithRole()
+    {
+        string expected = "Admin";
+        _userRepositoryMock.Setup(x => x.GetAllUsersAndRoles())
+            .ReturnsAsync(new List<ApplicationUserDTO>
+            {
+                new ApplicationUserDTO
+                {
+                    Id = "1",
+                    Roles = new string[] { expected }
+                }
+            });
+
+        var roles = await _sut.GetAllUsersAndRoles();
+        Assert.Equal(expected, roles.ToList()[0].Roles[0]);
+    }
+
+    [Fact]
+    public async Task GetAllUsersAndRoles_UsersDoesNotExist_ThrowsException()
+    {
+        _userRepositoryMock.Setup(x => x.GetAllUsersAndRoles())
+            .ThrowsAsync(new Exception("No users with roles found!"));
+
+        await Assert.ThrowsAsync<Exception>(() => _sut.GetAllUsersAndRoles());
+    }
+
+    [Fact]
+    public async Task UpdateUser_UserNotFound_ThrowsException()
+    {
+        _userRepositoryMock.Setup(x => x.GetById("1"))
+            .ThrowsAsync(new Exception("User does not exist!"));
+        ApplicationUserDTO applicationUserDTO = new ApplicationUserDTO
+        {
+            Id = "1",
+        };
+
+        await Assert.ThrowsAsync<Exception>(() => _sut.UpdateUser(applicationUserDTO));
+    }
+
+    //[Fact]
+    //public async Task UpdateUser_MailSet_UpdatesMail()
+    //{
+    //    _userRepositoryMock.Setup(x => x.UpdateEmail(It.IsAny<ApplicationUserDTO>()))
+    //        .ReturnsAsync(null);
+    //    ApplicationUserDTO applicationUserDTO = new ApplicationUserDTO
+    //    {
+    //        Id = "1",
+    //    };
+
+    //    await Assert.ThrowsAsync<Exception>(() => _sut.UpdateUser(applicationUserDTO));
+    //}
+
+    [Fact]
+    public async Task DeleteUser_UserNotFound_ThrowsException()
+    {
+        string userId = "1";
+        _userRepositoryMock.Setup(x => x.GetById(userId))
+            .ThrowsAsync(new Exception("User does not exist!"));
+        ApplicationUserDTO applicationUserDTO = new ApplicationUserDTO
+        {
+            Id = userId,
+        };
+
+        await Assert.ThrowsAsync<Exception>(() => _sut.DeleteUser(userId));
+    }
+
+
 }
