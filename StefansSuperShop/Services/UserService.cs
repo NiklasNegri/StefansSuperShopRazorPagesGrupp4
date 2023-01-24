@@ -60,7 +60,7 @@ namespace StefansSuperShop.Services
             _userRepository.GetAll() ?? throw new Exception("No users found!");
 
         public Task<IList<string>> GetUserRoles(string id) =>
-            _userRepository.GetUserRoles(id) ?? throw new Exception("No users found!");
+            _userRepository.GetUserRoles(id) ?? throw new Exception("No user roles found!");
 
         public Task<IList<ApplicationUserDTO>> GetAllUsersAndRoles() =>
             _userRepository.GetAllUsersAndRoles() ?? throw new Exception("No users found!");
