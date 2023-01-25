@@ -15,17 +15,22 @@ namespace StefansSuperShop.Unit.Test.Services
 
         public MailServiceTests()
         {
-            _settingsMock = new Mock<IOptions<MailSettings>>();
-            _sut = new MailService(_settingsMock.Object);
+            MailSettings options = new MailSettings()
+            {
+                DisplayName = "Display Name",
+                From = "test@test.se",
+                Host = "host.host",
+                Port = 000,
+                UserName = "test@username.se",
+                Password = "Abc123!",
+                UseSSL = false,
+                UseStartTls = true
+            };
 
-            _settingsMock.Setup(x => x.Value.DisplayName).Returns("Display Name");
-            _settingsMock.Setup(x => x.Value.From).Returns("test@test.se");
-            _settingsMock.Setup(x => x.Value.Host).Returns("host.host");
-            _settingsMock.Setup(x => x.Value.Port).Returns(000);
-            _settingsMock.Setup(x => x.Value.UserName).Returns("test@username.se");
-            _settingsMock.Setup(x => x.Value.Password).Returns("Abc123!");
-            _settingsMock.Setup(x => x.Value.UseSSL).Returns(false);
-            _settingsMock.Setup(x => x.Value.UseStartTls).Returns(true);
+            _settingsMock = new Mock<IOptions<MailSettings>>();
+            _settingsMock.Setup(x => x.Value).Returns(options);
+
+            _sut = new MailService(_settingsMock.Object);
         }
 
         [Fact]
