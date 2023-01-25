@@ -36,8 +36,8 @@ public class MailService : IMailService
 
             #region Sender / Receiver
             // Sender
-            mail.From.Add(new MailboxAddress(_settings.DisplayName, mailData.From ?? _settings.From));
-            mail.Sender = new MailboxAddress(mailData.DisplayName ?? _settings.DisplayName, mailData.From ?? _settings.From);
+            
+            mail.From.Add(new MailboxAddress(mailData.DisplayName, mailData.From));
 
             // Set Reply to if specified in mail data
             if(!string.IsNullOrEmpty(mailData.ReplyTo))
