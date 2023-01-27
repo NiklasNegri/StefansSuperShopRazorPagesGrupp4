@@ -30,6 +30,16 @@ public class MailService : IMailService
     
     public async Task SendAsync(MailData mailData, CancellationToken ct)
     {
+        if (mailData.To == null)
+        {
+            throw new ArgumentNullException(nameof(mailData));
+        }
+
+        if (mailData.Subject == null)
+        {
+            throw new ArgumentNullException(nameof(mailData));
+        }
+
         try
         {
             var mail = new MimeMessage();
