@@ -60,16 +60,20 @@ namespace StefansSuperShop.Services
             _userRepository.GetAll() ?? throw new Exception("No users found!");
 
         public Task<IList<string>> GetUserRoles(string id) =>
-            _userRepository.GetUserRoles(id) ?? throw new Exception("No users found!");
+            _userRepository.GetUserRoles(id) ?? throw new Exception("No user roles found!");
 
         public Task<IList<ApplicationUserDTO>> GetAllUsersAndRoles() =>
-            _userRepository.GetAllUsersAndRoles() ?? throw new Exception("No users found!");
+            _userRepository.GetAllUsersAndRoles() ?? throw new Exception("No users with roles found!");
 
         public async Task UpdateUser(ApplicationUserDTO model)
         {
-            if (GetById(model.Id) == null)
+            try
             {
-                throw new Exception("User does not exist!");
+                await GetById(model.Id);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
             }
 
             if (model.Email != null)
@@ -94,10 +98,14 @@ namespace StefansSuperShop.Services
 
         public async Task DeleteUser(string id)
         {
-            var user = await GetById(id);
-            if (user == null)
+            try
             {
-                throw new Exception("User does not exist!");
+                await GetById(id);
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
             }
             await _userRepository.DeleteUser(id);
         }

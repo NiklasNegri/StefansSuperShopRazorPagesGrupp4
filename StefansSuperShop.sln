@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StefansSuperShop", "StefansSuperShop\StefansSuperShop.csproj", "{5F034D39-3D57-4C89-8F6F-A782F0A3E046}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StefansSuperShop.Unit.Test", "StefansSuperShop.Unit.Test\StefansSuperShop.Unit.Test.csproj", "{0E75E71C-3FFB-47DF-A7A1-41D19B4E587E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StefansSuperShop.Unit.Test", "StefansSuperShop.Unit.Test\StefansSuperShop.Unit.Test.csproj", "{0E75E71C-3FFB-47DF-A7A1-41D19B4E587E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

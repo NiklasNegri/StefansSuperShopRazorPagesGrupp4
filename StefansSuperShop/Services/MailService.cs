@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,14 +31,24 @@ public class MailService : IMailService
     
     public async Task SendAsync(MailData mailData, CancellationToken ct)
     {
+        if (mailData.To == null)
+        {
+            throw new ArgumentNullException(nameof(mailData));
+        }
+
+        if (mailData.Subject == null)
+        {
+            throw new ArgumentNullException(nameof(mailData));
+        }
+
         try
         {
             var mail = new MimeMessage();
 
             #region Sender / Receiver
             // Sender
-            mail.From.Add(new MailboxAddress(_settings.DisplayName, mailData.From ?? _settings.From));
-            mail.Sender = new MailboxAddress(mailData.DisplayName ?? _settings.DisplayName, mailData.From ?? _settings.From);
+            
+            mail.From.Add(new MailboxAddress(mailData.DisplayName, mailData.From));
 
             // Set Reply to if specified in mail data
             if(!string.IsNullOrEmpty(mailData.ReplyTo))
@@ -57,8 +68,8 @@ public class MailService : IMailService
 
             // Add Content to Mime Message
             var body = new BodyBuilder();
-            mail.Subject = mailData.Subject;
-            body.HtmlBody = mailData.Body;
+            mail.Subject = mailData.Subject.Trim().ToUpper();
+            body.HtmlBody = GetMailTemplate(mailData.Body).Trim();
             mail.Body = body.ToMessageBody();
 
             #endregion
@@ -92,5 +103,17 @@ public class MailService : IMailService
     {
         foreach (var mailAddress in mailData.Where(x => !string.IsNullOrWhiteSpace(x)))
             mailList.Add(MailboxAddress.Parse(mailAddress.Trim()));
+    }
+
+    private static string GetMailTemplate(string body)
+    {
+        string filePath1 = "Data/Mail/Templates/index.html";
+        StreamReader str = new StreamReader(filePath1);
+        string mailTemplateText = str.ReadToEnd();
+        str.Close();
+
+        mailTemplateText = mailTemplateText.Replace("[This text till be replaced with input from user]", body);
+
+        return mailTemplateText;
     }
 }
